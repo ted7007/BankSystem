@@ -56,8 +56,8 @@
         <Button Content="Transfer" FontSize="20" Margin="10" Command="{Binding TransferCommand}"
                 Grid.Row="6" Grid.Column="2"/>
 
-        <TextBlock Text="To fill deposite transfer sum from account on Loan's ID" FontSize="20" Background="WhiteSmoke"
-                   Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <TextBlock Text="To fill deposite transfer sum from account on Loan's ID" FontSize="18" Background="WhiteSmoke"
+                   Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Margin="5"/>
         
     </Grid>
 </Window>

@@ -73,13 +73,33 @@ namespace BankSystem.ViewModel
 
         public ButtonCommand CloseCommand { get { return closeCommand ?? (closeCommand = new ButtonCommand(a => CloseProfileControl())); } }
 
-        public decimal NewDepositeStartBalance { get { return newDepositeStartBalance; } set { newDepositeStartBalance = value; OnPropertyChanged("NewDepositeStartBalance"); } }
+        public decimal NewDepositeStartBalance { get { return newDepositeStartBalance; } set { newDepositeStartBalance = value; OnPropertyChanged("NewDepositeStartBalance"); OnPropertyChanged("NewDepositeFinishSum"); } }
 
         public decimal NewLoanLoanAmount { get { return newLoanLoanAmount; } set { newLoanLoanAmount = value; OnPropertyChanged("NewLoanLoanAmount"); } }
 
-        public ComboBoxItem NewDepositeTypeString { get { return newDepositeTypeString; } set { newDepositeTypeString = value; OnPropertyChanged("NewDepositeTypeString"); } }
+        public ComboBoxItem NewDepositeTypeString { get { return newDepositeTypeString; } set { newDepositeTypeString = value; OnPropertyChanged("NewDepositeTypeString"); OnPropertyChanged("NewDepositeFinishSum"); } }
 
-        public int NewDepositeMonths { get { return newDepositeMonths; } set { newDepositeMonths = value; OnPropertyChanged("NewDepositeMonths"); } }
+        public int NewDepositeMonths { get { return newDepositeMonths; } set { newDepositeMonths = value; OnPropertyChanged("NewDepositeMonths"); OnPropertyChanged("NewDepositeFinishSum"); } }
+
+        public decimal NewDepositeFinishSum 
+        {
+            get
+            {
+                if (NewDepositeMonths <= 0 || NewDepositeStartBalance <= 0 || NewDepositeTypeString is null)
+                    return 0;
+                DepositeType dt = DepositeType.Default;
+                switch(NewDepositeTypeString.Content)
+                {
+                    case "Default":
+                        dt = DepositeType.Default;
+                        break;
+                    case "WithCapitalization":
+                        dt = DepositeType.WithCapitalization;
+                        break;
+                }
+                return Deposite.CalculateFinishSum(dt, NewDepositeStartBalance, NewDepositeMonths, clientProfile.DepositeRate);
+            }
+        }
 
         #endregion
 

@@ -57,13 +57,14 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" ShowGridLines="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="4*"/>
                             <RowDefinition Height="1.5*"/>
                             <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
@@ -85,11 +86,14 @@
                             <ComboBoxItem Content="Default"/>
                             <ComboBoxItem Content="WithCapitalization"/>
                         </ComboBox>
+                        <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" TextWrapping="Wrap" FontSize="20" >
+                            At finish date deposite's balance will be: <TextBlock Text="{Binding NewDepositeFinishSum}"/>
+                        </TextBlock>
                         <Button Content="Add" FontSize="20" Margin="5" Grid.Column="0" Grid.Row="2"
                                 Command="{Binding AddCommand}"/>
                         <Button Content="Edit" FontSize="20" Margin="5" Grid.Column="1" Grid.Row="2"
                                 Command="{Binding EditCommand}"/>
-                        <Button Content="Exit" FontSize="20" Margin="5" Grid.Column="3" Grid.Row="2" IsCancel="True"/>
+                        <Button Content="Exit" FontSize="20" Margin="5" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" IsCancel="True"/>
                     </Grid>
                 </Grid>
             </TabItem>

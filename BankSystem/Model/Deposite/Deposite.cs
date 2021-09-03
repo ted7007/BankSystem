@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BankSystem.Model.Client;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -29,6 +30,28 @@ namespace BankSystem.Model.Deposite
         {
             Deposites = new List<Deposite>();
             nowId = -1;
+        }
+
+        static public decimal CalculateFinishSum(DepositeType type, decimal startBalance, int months, int rate)
+        {
+            decimal finishBalance = startBalance;
+            switch(type)
+            {
+                case DepositeType.Default:
+                    while((float)months/12>=1)
+                    {
+                        months /= 12;
+                        finishBalance += finishBalance * (decimal)rate / 100;
+                    }
+                    break;
+                case DepositeType.WithCapitalization:
+                    for(int i = 0; i < months; i++)
+                    {
+                        finishBalance += finishBalance * (decimal)rate / 100;
+                    }
+                    break;
+            }
+            return finishBalance;
         }
 
         static void AddDeposite(Deposite deposite)
