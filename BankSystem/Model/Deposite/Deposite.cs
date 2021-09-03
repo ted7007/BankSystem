@@ -54,6 +54,8 @@ namespace BankSystem.Model.Deposite
         decimal currentBalance;
 
         bool isActive;
+
+        bool isAccrualsContinue;
         #endregion
 
         #region properties
@@ -73,6 +75,8 @@ namespace BankSystem.Model.Deposite
 
         public int Rate { get { return rate; } set { rate = value; OnPropertyChanged("Rate"); } }
 
+        public bool IsAccrualsContinue { get { return isAccrualsContinue; } set { isAccrualsContinue = value; OnPropertyChanged("IsAccrualsContinue"); } }
+
         #endregion
         public Deposite(int rate, int profileId, decimal startBalance, DateTime startPeriod, DateTime finishPeriod)
         {
@@ -83,6 +87,7 @@ namespace BankSystem.Model.Deposite
             this.currentBalance = startBalance;
             this.profileId = profileId;
             this.isActive = true;
+            this.isAccrualsContinue = true;
             this.id = Deposite.NextId;
             Deposite.AddDeposite(this);
         }
@@ -93,6 +98,18 @@ namespace BankSystem.Model.Deposite
         /// Сдвиг текущей даты на месяц вперёд
         /// </summary>
         abstract public void GoNextMounth();
+
+        /// <summary>
+        /// Метод проверки активности депозита.
+        /// </summary>
+        abstract public void CheckActive();
+
+        /// <summary>
+        /// Метод перевода денежек на другой счёт.
+        /// </summary>
+        /// <param name="account">счёт, на который следует перевести денежки</param>
+        /// <param name="sum">сумма, которую следует перевести</param>
+        abstract public bool Transfer(IProfileControl account, decimal sum);
 
         #endregion
 

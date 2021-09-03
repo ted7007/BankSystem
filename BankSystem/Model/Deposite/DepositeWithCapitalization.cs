@@ -12,12 +12,30 @@ namespace BankSystem.Model.Deposite
 
         public override void GoNextMounth()
         {
-            if (!IsActive)
+            
+            if (!IsAccrualsContinue)
                 return;
+            
             CurrentPeriod = CurrentPeriod.AddMonths(1);
-            if (CurrentPeriod > FinishPeriod)
-                IsActive = false;
+            CheckActive();
             CurrentBalance = CurrentBalance * ((decimal)Rate / 100 + 1);
+        }
+
+        public override void CheckActive()
+        {
+            if (CurrentBalance <= 0)
+                IsActive = false;
+            if (CurrentPeriod >= FinishPeriod)
+                IsAccrualsContinue = false;
+        }
+
+        public override bool Transfer(IProfileControl account, decimal sum)
+        {
+            if (!IsActive || sum > CurrentBalance)
+                return false;
+            account.CurrentBalance += sum;
+            CurrentBalance -= sum;
+            return true;
         }
     }
 }

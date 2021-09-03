@@ -83,6 +83,13 @@ namespace BankSystem.Model
 
         #region methods
 
+        /// <summary>
+        /// Метод перевода средств на другой счёт
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="sum"></param>
+        /// <param name="log"></param>
+        /// <returns></returns>
         public bool Transfer(IProfileControl account, decimal sum, string log = "")
         {
             if (!IsActive||sum>CurrentBalance)
@@ -93,6 +100,12 @@ namespace BankSystem.Model
             return true;
         }
 
+        /// <summary>
+        /// Метод для снятия средств
+        /// </summary>
+        /// <param name="sum"></param>
+        /// <param name="log"></param>
+        /// <returns></returns>
         public bool Withdraw(decimal sum, string log = "")
         {
             if (!IsActive||sum>CurrentBalance)
@@ -103,6 +116,12 @@ namespace BankSystem.Model
             return true;
         }
 
+        /// <summary>
+        /// Метод для пополнения средств
+        /// </summary>
+        /// <param name="sum"></param>
+        /// <param name="log"></param>
+        /// <returns></returns>
         public bool Fill(decimal sum, string log = "")
         {
             if (!isActive)

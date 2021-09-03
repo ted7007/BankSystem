@@ -71,12 +71,12 @@
                         <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" FontSize="20">
                             Input StartBalance for new Deposite:
                         </TextBlock>
-                        <TextBox Background="WhiteSmoke" Grid.Row="1" Grid.Column="0" Margin="5" Text="{Binding NewDepositeStartBalance}"/>
+                        <TextBox Background="WhiteSmoke" Grid.Row="1" Grid.Column="0" Margin="5" FontSize="15" Text="{Binding NewDepositeStartBalance}"/>
                         
                         <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" FontSize="20" >
                              Input Time Span in months for new Deposite:
                         </TextBlock>
-                        <TextBox Background="WhiteSmoke" Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding NewDepositeMonths}"/>
+                        <TextBox Background="WhiteSmoke" Grid.Row="1" Grid.Column="1" Margin="5" FontSize="15" Text="{Binding NewDepositeMonths}"/>
                         
                         <TextBlock Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" FontSize="20" >
                              Input type deposite for new Deposite:
@@ -123,7 +123,7 @@
                         <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" FontSize="20">
                             Input StartBalance for new Loan:
                         </TextBlock>
-                        <TextBox Background="WhiteSmoke" Grid.Row="1" Grid.Column="0" Margin="5" Text="{Binding NewLoanLoanAmount}"/>
+                        <TextBox Background="WhiteSmoke" Grid.Row="1" Grid.Column="0" Margin="5" FontSize="15" Text="{Binding NewLoanLoanAmount}"/>
 
                         <Button Content="Add" FontSize="20" Margin="5" Grid.Column="0" Grid.Row="2"
                                 Command="{Binding AddCommand}"/>

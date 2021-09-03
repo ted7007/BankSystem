@@ -20,18 +20,44 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button x:Name="Exit" Content="Exit" FontSize="20" Margin="20" IsCancel="True"/>
+        <Button x:Name="Exit" Content="Exit" FontSize="20" Margin="5" IsCancel="True"/>
         <TextBlock FontSize="20"
                    Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-            ID: <TextBlock Text="{Binding Id}" TextWrapping="Wrap"/>
+            ID: <TextBlock Text="{Binding Deposite.Id}" TextWrapping="Wrap"/>
         </TextBlock>
         <TextBlock FontSize="20"
                    Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
-            Current Balance: <TextBlock Text="{Binding CurrentBalance}" TextWrapping="Wrap"/>
+            Current Balance: <TextBlock Text="{Binding Deposite.CurrentBalance}" TextWrapping="Wrap"/>
         </TextBlock>
-        <TextBlock Text="To fill transfer sum from account on Loan's ID" FontSize="20" Background="WhiteSmoke"
-                   Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <TextBlock FontSize="20"
+                   Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+            Is accurals continue: <TextBlock Text="{Binding Deposite.IsAccrualsContinue}"/>
+        </TextBlock>
 
+        <TextBlock Text="Input id to transfer:" FontSize="15" TextWrapping="Wrap"
+                   Grid.Row="3" Grid.Column="1" Margin="5"/>
+        <TextBox  FontSize="15" TextWrapping="Wrap" Background="WhiteSmoke" Margin="10" Text="{Binding IdToTransfer}"
+                 Grid.Row="3" Grid.Column="2" />
+        <TextBlock Text="Input sum to transfer:" FontSize="15" TextWrapping="Wrap"
+                   Grid.Row="4" Grid.Column="1" Margin="5"/>
+        <TextBox FontSize="15" TextWrapping="Wrap" Background="WhiteSmoke" Margin="10" Text="{Binding SumToTransfer}"
+                 Grid.Row="4" Grid.Column="2"/>
+        <TextBlock Text="Input type to transfer:" FontSize="15" TextWrapping="Wrap"
+                   Grid.Row="5" Grid.Column="1" Margin="5"/>
+        <ComboBox Grid.Column="2" Grid.Row="5" Margin="10" SelectedItem="{Binding SelectedProfileControlToTransfer}">
+            <ComboBoxItem Content="Bank account"/>
+            <ComboBoxItem Content="Deposite"/>
+            <ComboBoxItem Content="Loan"/>
+        </ComboBox>
+        <Button Content="Transfer" FontSize="20" Margin="10" Command="{Binding TransferCommand}"
+                Grid.Row="6" Grid.Column="2"/>
+
+        <TextBlock Text="To fill deposite transfer sum from account on Loan's ID" FontSize="20" Background="WhiteSmoke"
+                   Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3"/>
+        
     </Grid>
 </Window>

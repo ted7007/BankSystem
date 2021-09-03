@@ -137,7 +137,7 @@ namespace BankSystem.ViewModel
                     if (SelectedDeposite is null)
                         return;
                     DepositeWindow dw = new DepositeWindow();
-                    dw.DataContext = SelectedDeposite;
+                    dw.DataContext = new DepositeVM(SelectedDeposite);
                     dw.ShowDialog();
                     break;
                 case "Loans":

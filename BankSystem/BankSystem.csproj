@@ -71,6 +71,7 @@
     <Compile Include="ViewModel\BankSystemVM.cs" />
     <Compile Include="ViewModel\ButtonCommand.cs" />
     <Compile Include="ViewModel\ClientProfileVM.cs" />
+    <Compile Include="ViewModel\DepositeVM.cs" />
     <Compile Include="View\AccountWindow.xaml.cs">
       <DependentUpon>AccountWindow.xaml</DependentUpon>
     </Compile>
