@@ -18,8 +18,17 @@ namespace BankSystem.Model
         static private List<BankAccount> BAccounts;
 
         static private int nowId;
+
+        /// <summary>
+        /// Свойство для выявления следующего индетефикатора
+        /// </summary>
         static private int NextId { get { BankAccount.nowId++; return BankAccount.nowId; } }
 
+        /// <summary>
+        /// Метод поиска счёта
+        /// </summary>
+        /// <param name="id"> индетефикатор счёта</param>
+        /// <returns></returns>
         static public BankAccount Find(int id)
         {
             foreach(var i in BAccounts)
@@ -35,6 +44,10 @@ namespace BankSystem.Model
             nowId = -1;
         }
 
+        /// <summary>
+        /// Метод добавления счёта в список банковской системы
+        /// </summary>
+        /// <param name="bAccount">банковский аккаунт, который следует добавить</param>
         static void AddBAccount(BankAccount bAccount)
         {
             BAccounts.Add(bAccount);
@@ -64,6 +77,9 @@ namespace BankSystem.Model
 
         public decimal CurrentBalance { get { return currentBalance; }  set { currentBalance = value; } }
 
+        /// <summary>
+        /// список изменений
+        /// </summary>
         public ObservableCollection<string> Logs { get { return logs; } private set { logs = value; } }
 
         public bool IsActive { get { return isActive; } set { isActive = false; } }

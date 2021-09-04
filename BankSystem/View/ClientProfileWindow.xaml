@@ -69,24 +69,24 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" FontSize="20">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" TextWrapping="Wrap" FontSize="15">
                             Input StartBalance for new Deposite:
                         </TextBlock>
                         <TextBox Background="WhiteSmoke" Grid.Row="1" Grid.Column="0" Margin="5" FontSize="15" Text="{Binding NewDepositeStartBalance}"/>
-                        
-                        <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" FontSize="20" >
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" Margin="5" TextWrapping="Wrap" FontSize="15" >
                              Input Time Span in months for new Deposite:
                         </TextBlock>
                         <TextBox Background="WhiteSmoke" Grid.Row="1" Grid.Column="1" Margin="5" FontSize="15" Text="{Binding NewDepositeMonths}"/>
-                        
-                        <TextBlock Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" FontSize="20" >
+
+                        <TextBlock Grid.Row="0" Grid.Column="2" Margin="5" TextWrapping="Wrap" FontSize="15" >
                              Input type deposite for new Deposite:
                         </TextBlock>
                         <ComboBox Background="WhiteSmoke" Grid.Row="1" Grid.Column="2" Margin="5" FontSize="10" SelectedItem="{Binding NewDepositeTypeString}">
                             <ComboBoxItem Content="Default"/>
                             <ComboBoxItem Content="WithCapitalization"/>
                         </ComboBox>
-                        <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" TextWrapping="Wrap" FontSize="20" >
+                        <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" Margin="5" TextWrapping="Wrap" FontSize="15" >
                             At finish date deposite's balance will be: <TextBlock Text="{Binding NewDepositeFinishSum}"/>
                         </TextBlock>
                         <Button Content="Add" FontSize="20" Margin="5" Grid.Column="0" Grid.Row="2"

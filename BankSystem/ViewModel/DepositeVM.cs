@@ -28,15 +28,45 @@ namespace BankSystem.ViewModel
 
         #region properties
 
+        /// <summary>
+        /// Депозит
+        /// </summary>
         public Deposite Deposite { get { return deposite; } set { deposite = value; OnPropertyChanged("Deposite"); } }
 
+        /// <summary>
+        /// Выбранный объект профиля для перевода
+        /// </summary>
         public ComboBoxItem SelectedProfileControlToTransfer { get { return selectedProfileControlToTransfer; } set { selectedProfileControlToTransfer = value; OnPropertyChanged("SelectedProfileControlToTransfer"); } }
 
+        /// <summary>
+        /// Индетефикатор для перевода
+        /// </summary>
         public int IdToTransfer { get { return idToTransfer; } set { idToTransfer = value; OnPropertyChanged("IdToTransfer"); } }
 
+        /// <summary>
+        /// Сумма для перевода
+        /// </summary>
         public decimal SumToTransfer { get { return sumToTransfer; } set { sumToTransfer = value; OnPropertyChanged("SumToTransfer"); } }
 
+        /// <summary>
+        /// Команда для перевода
+        /// </summary>
         public ButtonCommand TransferCommand { get { return transferCommand ?? (transferCommand = new ButtonCommand(a => Transfer())); } }
+
+        /// <summary>
+        /// Тип депозита
+        /// </summary>
+        public DepositeType DepositeType 
+        { 
+            get 
+            {
+                if (Deposite is DefaultDeposite)
+                    return DepositeType.Default;
+                else
+                    return DepositeType.WithCapitalization;
+                    
+            } 
+        }
         #endregion
 
         public DepositeVM(Deposite deposite)
@@ -46,6 +76,9 @@ namespace BankSystem.ViewModel
 
         #region methods
 
+        /// <summary>
+        /// Метод для перевода
+        /// </summary>
         public void Transfer()
         {
             if (SelectedProfileControlToTransfer is null || SumToTransfer == 0)

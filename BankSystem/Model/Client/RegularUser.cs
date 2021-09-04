@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 
 namespace BankSystem.Model.Client
 {
+    /// <summary>
+    /// Обычный пользователь как банковский профиль
+    /// </summary>
     class RegularUser:BankClientProfile
     {
         public RegularUser(string name, int depositeRate, int loanRate):base(name, depositeRate, loanRate) { }
 
-        public string GetPaidSupport(ref BankAccount account)
+        /// <summary>
+        /// Получить платную поддержку
+        /// </summary>
+        /// <param name="account">счёт, с которого поддержка будет оплачена</param>
+        /// <returns></returns>
+        public string GetPaidSupport(BankAccount account)
         {
 
             if (account.CurrentBalance >= 50)

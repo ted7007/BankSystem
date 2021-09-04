@@ -93,10 +93,19 @@ namespace BankSystem.ViewModel
         /// </summary>
         public ButtonCommand EditCommand { get { return editCommand ?? (editCommand = new ButtonCommand(sender => EditProfile())); } }
 
+        /// <summary>
+        /// Команда для перехода на следующий месяц
+        /// </summary>
         public ButtonCommand NextMonthCommand { get{ return nextMonthCommand ?? (nextMonthCommand = new ButtonCommand(sender => NextMonth())); } }
 
+        /// <summary>
+        /// Команда для показа FAQ
+        /// </summary>
         public ButtonCommand ShowFAQCommand { get { return showFAQCommand ?? (showFAQCommand = new ButtonCommand(sender => MessageBox.Show(FAQ))); } }
 
+        /// <summary>
+        /// Часто задаваемые вопросы, помощь по использования приложения
+        /// </summary>
         public string FAQ { get { return fAQ; } set { fAQ = value; OnPropertyChanged("FAQ"); } }
 
         #endregion

@@ -50,6 +50,9 @@ namespace BankSystem.ViewModel
         /// </summary>
         public T ClientProfile { get { return clientProfile; } set { clientProfile = value; OnPropertyChanged("ClientProfile"); } }
 
+        /// <summary>
+        /// Выбранный объект профиля
+        /// </summary>
         public TabItem SelectedProfileControl { get { return selectedProfileControl; } set { selectedProfileControl = value; OnPropertyChanged("SelectedProfileControl"); } }
 
         /// <summary>
@@ -67,20 +70,44 @@ namespace BankSystem.ViewModel
         /// </summary>
         public Deposite SelectedDeposite { get { return selectedDeposite; } set { selectedDeposite = value; OnPropertyChanged("SelectedDeposite"); } }
 
+        /// <summary>
+        /// Команда для добавления объекта
+        /// </summary>
         public ButtonCommand AddCommand { get { return addCommand ?? (addCommand = new ButtonCommand(a => AddProfileControl())); } }
 
+        /// <summary>
+        /// Команда для редактирования объекта
+        /// </summary>
         public ButtonCommand EditCommand { get { return editCommand ?? (editCommand = new ButtonCommand(a => EditProfileControl())); } }
 
+        /// <summary>
+        /// Команда для закрытия объекта
+        /// </summary>
         public ButtonCommand CloseCommand { get { return closeCommand ?? (closeCommand = new ButtonCommand(a => CloseProfileControl())); } }
 
+        /// <summary>
+        /// Начальный баланс нового вклада
+        /// </summary>
         public decimal NewDepositeStartBalance { get { return newDepositeStartBalance; } set { newDepositeStartBalance = value; OnPropertyChanged("NewDepositeStartBalance"); OnPropertyChanged("NewDepositeFinishSum"); } }
 
+        /// <summary>
+        /// Сумма кредита нового кредита
+        /// </summary>
         public decimal NewLoanLoanAmount { get { return newLoanLoanAmount; } set { newLoanLoanAmount = value; OnPropertyChanged("NewLoanLoanAmount"); } }
 
+        /// <summary>
+        /// Тип нового вклада
+        /// </summary>
         public ComboBoxItem NewDepositeTypeString { get { return newDepositeTypeString; } set { newDepositeTypeString = value; OnPropertyChanged("NewDepositeTypeString"); OnPropertyChanged("NewDepositeFinishSum"); } }
 
+        /// <summary>
+        /// Количество месяцев для нового вклада
+        /// </summary>
         public int NewDepositeMonths { get { return newDepositeMonths; } set { newDepositeMonths = value; OnPropertyChanged("NewDepositeMonths"); OnPropertyChanged("NewDepositeFinishSum"); } }
 
+        /// <summary>
+        /// Конечная сумма нового вклада
+        /// </summary>
         public decimal NewDepositeFinishSum 
         {
             get
@@ -110,6 +137,9 @@ namespace BankSystem.ViewModel
 
         #region methods
 
+        /// <summary>
+        /// Метод для добавления объекта профиля
+        /// </summary>
         public void AddProfileControl()
         {
             switch (SelectedProfileControl.Header)
@@ -141,6 +171,9 @@ namespace BankSystem.ViewModel
             }
         }
 
+        /// <summary>
+        /// Метод для редактирования объекта профиля
+        /// </summary>
         public void EditProfileControl()
         {
             switch (SelectedProfileControl.Header)
@@ -170,6 +203,9 @@ namespace BankSystem.ViewModel
             }
         }
 
+        /// <summary>
+        /// Метод для закрытия объекта профиля
+        /// </summary>
         public void CloseProfileControl()
         {
             switch(SelectedProfileControl.Header)

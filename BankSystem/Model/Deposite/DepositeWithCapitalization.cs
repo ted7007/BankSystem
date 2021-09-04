@@ -6,21 +6,24 @@ using System.Threading.Tasks;
 
 namespace BankSystem.Model.Deposite
 {
+    /// <summary>
+    /// Депозит с капитализацией
+    /// </summary>
     class DepositeWithCapitalization : Deposite
     {
         public DepositeWithCapitalization(int rate, int profileId, decimal startBalance, DateTime startPeriod, DateTime finishPeriod) : base(rate, profileId, startBalance, startPeriod, finishPeriod) { }
 
         public override void GoNextMounth()
         {
-            
-            if (!IsAccrualsContinue)
-                return;
-            
-            CurrentPeriod = CurrentPeriod.AddMonths(1);
-            CheckActive();
-            CurrentBalance = CurrentBalance * ((decimal)Rate / 100 + 1);
-        }
-
+                                                                                        //
+            if (!IsAccrualsContinue)                                                    //     При переходе на следующий год начисляются проценты.
+                return;                                                                 //
+                                                                                        //
+            CurrentPeriod = CurrentPeriod.AddMonths(1);                                 //
+            CheckActive();                                                              //
+            CurrentBalance = CurrentBalance * ((decimal)Rate / 100 + 1);                //
+        }                                                                               
+                                                                                        
         public override void CheckActive()
         {
             if (CurrentBalance <= 0)

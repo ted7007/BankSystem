@@ -12,6 +12,10 @@ namespace BankSystem.Model
     class BankSystem : INotifyPropertyChanged
     {
         #region static
+        
+        /// <summary>
+        /// Текущая дата банковской системы
+        /// </summary>
         static public DateTime CurrentDate { get; private set; }
 
         static BankSystem()
@@ -19,6 +23,9 @@ namespace BankSystem.Model
             CurrentDate = DateTime.Now;
         }
 
+        /// <summary>
+        /// Переход на следующий месяц
+        /// </summary>
         static public void StaticGoNextMonth()
         {
             CurrentDate = CurrentDate.AddMonths(1);

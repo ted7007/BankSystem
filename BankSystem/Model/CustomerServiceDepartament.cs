@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace BankSystem.Model
 {
+    /// <summary>
+    /// Банковский отдел по работе с T клиентами
+    /// </summary>
+    /// <typeparam name="T">тип клиента, с которым работает банковский отдел</typeparam>
     class CustomerServiceDepartament<T> : INotifyPropertyChanged
     where T : BankClientProfile
     {

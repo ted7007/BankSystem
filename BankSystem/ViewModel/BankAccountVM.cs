@@ -32,18 +32,39 @@ namespace BankSystem.ViewModel
 
         #region properties
 
+        /// <summary>
+        /// Банковский счёт
+        /// </summary>
         public BankAccount BankAccount { get { return bankAccount; }  set { bankAccount = value; OnPropertyChanged("BankAccount"); } }
-
+        
+        /// <summary>
+        /// Выбранный объект со счётом для перевода
+        /// </summary>
         public ComboBoxItem SelectedProfileControlToTransfer{ get { return selectedProfileControlToTransfer; } set { selectedProfileControlToTransfer = value; OnPropertyChanged("SelectedProfileControlToTransfer"); } }
 
+        /// <summary>
+        /// Индетефикатор для перевода
+        /// </summary>
         public int IdToTransfer { get { return idToTransfer; } set { idToTransfer = value; OnPropertyChanged("IdToTransfer"); } }
 
+        /// <summary>
+        /// Сумма для перевода
+        /// </summary>
         public decimal SumToTransfer { get { return sumToTransfer; } set { sumToTransfer = value; OnPropertyChanged("SumToTransfer"); } }
 
+        /// <summary>
+        /// Сумма для пополнения
+        /// </summary>
         public decimal SumToFill { get { return sumToFill; } set { sumToFill = value; OnPropertyChanged("SumToFill"); } }
 
+        /// <summary>
+        /// Команда для перевода
+        /// </summary>
         public ButtonCommand TransferCommand { get { return transferCommand ?? (transferCommand = new ButtonCommand(a => Transfer())); } }
 
+        /// <summary>
+        /// Команда для пополнения
+        /// </summary>
         public ButtonCommand FillCommand { get { return fillCommand ?? (fillCommand = new ButtonCommand(a => Fill())); } }
         #endregion
 
@@ -54,6 +75,9 @@ namespace BankSystem.ViewModel
 
         #region methods
         
+        /// <summary>
+        /// Метод для перевода средств
+        /// </summary>
         public void Transfer()
         {
             if (SelectedProfileControlToTransfer is null || SumToTransfer==0)
@@ -81,6 +105,9 @@ namespace BankSystem.ViewModel
             OnPropertyChanged("BankAccount");
         }
 
+        /// <summary>
+        /// Метод для пополнения средств
+        /// </summary>
         public void Fill()
         {
             if (SumToFill == 0)

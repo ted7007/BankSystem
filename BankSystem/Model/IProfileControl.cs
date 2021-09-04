@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BankSystem.Model
 {
+    /// <summary>
+    /// Интерфейс объекта профиля
+    /// </summary>
     interface IProfileControl
     {
         /// <summary>

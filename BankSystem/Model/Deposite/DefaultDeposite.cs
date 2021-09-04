@@ -6,21 +6,24 @@ using System.Threading.Tasks;
 
 namespace BankSystem.Model.Deposite
 {
+    /// <summary>
+    /// Обычный депозит
+    /// </summary>
     class DefaultDeposite : Deposite
     {
         public DefaultDeposite(int rate, int profileId, decimal startBalance, DateTime startPeriod, DateTime finishPeriod):base(rate, profileId, startBalance, startPeriod, finishPeriod) { }
 
         public override void GoNextMounth()
         {
-            
-            if (!IsAccrualsContinue)
-                return;
-            CurrentPeriod = CurrentPeriod.AddMonths(1);
-            CheckActive();
-            if((CurrentPeriod-StartPeriod).TotalDays/365>=1)
-            {
-                StartPeriod = CurrentPeriod;
-                CurrentBalance = CurrentBalance * ((decimal)Rate / 100 + 1);
+                                                                                     //
+            if (!IsAccrualsContinue)                                                 //     При переходе на следующий год начисляются проценты.
+                return;                                                              //
+            CurrentPeriod = CurrentPeriod.AddMonths(1);                              //
+            CheckActive();                                                           //
+            if((CurrentPeriod-StartPeriod).TotalDays/365>=1)                         //
+            {                                                                        //
+                StartPeriod = CurrentPeriod;                                         //
+                CurrentBalance = CurrentBalance * ((decimal)Rate / 100 + 1);         //
             }
         }
 
@@ -31,6 +34,7 @@ namespace BankSystem.Model.Deposite
             if (CurrentPeriod >= FinishPeriod)
                 IsAccrualsContinue = false;
         }
+
 
         public override bool Transfer(IProfileControl account, decimal sum)
         {

@@ -15,8 +15,17 @@ namespace BankSystem.Model.Deposite
         static private List<Deposite> Deposites;
 
         static private int nowId;
+
+        /// <summary>
+        /// Свойство для выявления следующего индетефикатора
+        /// </summary>
         static private int NextId { get { Deposite.nowId++; return Deposite.nowId; } }
 
+        /// <summary>
+        /// Метод поиска депозита
+        /// </summary>
+        /// <param name="id"> индетефикатор депозита</param>
+        /// <returns></returns>
         static public Deposite Find(int id)
         {
             foreach (var i in Deposites)
@@ -32,28 +41,40 @@ namespace BankSystem.Model.Deposite
             nowId = -1;
         }
 
+        /// <summary>
+        /// вычисление конечной суммы вклада
+        /// </summary>
+        /// <param name="type">тип вклада</param>
+        /// <param name="startBalance">начальная сумма вклада</param>
+        /// <param name="months">период, на который открывается вклад (в месяцах)</param>
+        /// <param name="rate">ставка вклада</param>
+        /// <returns></returns>
         static public decimal CalculateFinishSum(DepositeType type, decimal startBalance, int months, int rate)
         {
             decimal finishBalance = startBalance;
-            switch(type)
-            {
-                case DepositeType.Default:
-                    while((float)months/12>=1)
-                    {
-                        months /= 12;
-                        finishBalance += finishBalance * (decimal)rate / 100;
-                    }
-                    break;
-                case DepositeType.WithCapitalization:
-                    for(int i = 0; i < months; i++)
-                    {
-                        finishBalance += finishBalance * (decimal)rate / 100;
-                    }
-                    break;
-            }
+            switch(type)                                                                //     Для каждого типа депозита вычисления конечной суммы отличаются.
+            {                                                                           //     
+                case DepositeType.Default:                                              //     
+                    while((float)months/12>=1)                                          //     У обычного депозита проценты начисляются раз в год.
+                    {                                                                   //     
+                        months /= 12;                                                   //     
+                        finishBalance += finishBalance * (decimal)rate / 100;           //     
+                    }                                                                   //     
+                    break;                                                              //     
+                case DepositeType.WithCapitalization:                                   //     
+                    for(int i = 0; i < months; i++)                                     //     У депозита с капитализацией процентры начисляются каждый месяц.
+                    {                                                                   //     
+                        finishBalance += finishBalance * (decimal)rate / 100;           //     
+                    }                                                                   //     
+                    break;                                                              //     
+            }                                                                           //     
             return finishBalance;
         }
 
+        /// <summary>
+        /// Метод добавления депозита в список банковской системы
+        /// </summary>
+        /// <param name="deposite">депозит, который следует добавить</param>
         static void AddDeposite(Deposite deposite)
         {
             Deposites.Add(deposite);
@@ -62,6 +83,7 @@ namespace BankSystem.Model.Deposite
         #endregion
 
         #region fields
+
         int id;
 
         int profileId;
@@ -82,22 +104,38 @@ namespace BankSystem.Model.Deposite
         #endregion
 
         #region properties
+
         public int Id { get { return id; } set { id = value; OnPropertyChanged("Id"); } }
 
         public int ProfileId { get { return profileId; } }
 
         public decimal CurrentBalance { get { return currentBalance; } set { currentBalance = value; OnPropertyChanged("CurrentBalance"); } }
+
         public bool IsActive { get { return isActive; } set { isActive = value; OnPropertyChanged("IsActive"); } }
 
+        /// <summary>
+        /// Начальная дата вклада
+        /// </summary>
         public DateTime StartPeriod { get { return startPeriod; } set { startPeriod = value; OnPropertyChanged("StartPeriod"); } }
 
+        /// <summary>
+        /// Текущая дата вклада
+        /// </summary>
         public DateTime CurrentPeriod { get { return currentPeriod; } set { currentPeriod = value; OnPropertyChanged("CurrentPeriod"); } }
 
-
+        /// <summary>
+        /// Конечная дата вклада
+        /// </summary>
         public DateTime FinishPeriod { get { return finishPeriod; } set { finishPeriod = value; OnPropertyChanged("FinishPeriod"); } }
 
+        /// <summary>
+        /// Ставка по вкладу
+        /// </summary>
         public int Rate { get { return rate; } set { rate = value; OnPropertyChanged("Rate"); } }
 
+        /// <summary>
+        /// Состояние начислений
+        /// </summary>
         public bool IsAccrualsContinue { get { return isAccrualsContinue; } set { isAccrualsContinue = value; OnPropertyChanged("IsAccrualsContinue"); } }
 
         #endregion

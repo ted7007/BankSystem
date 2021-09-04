@@ -14,10 +14,18 @@ namespace BankSystem.Model
         static private List<Loan> Loans;
 
         static private int nowId;
+
+        /// <summary>
+        /// Свойство для выявления следующего индетефикатора
+        /// </summary>
         static private int NextId { get { Loan.nowId++; return Loan.nowId; } }
 
-       
 
+        /// <summary>
+        /// Метод поиска кредита
+        /// </summary>
+        /// <param name="id"> индетефикатор кредита</param>
+        /// <returns></returns>
         static public Loan Find(int id)
         {
             foreach (var i in Loans)
@@ -27,13 +35,18 @@ namespace BankSystem.Model
             }
             return null;
         }
+
         static Loan()
         {
             Loans = new List<Loan>();
             nowId = -1;
         }
 
-        static void AddDeposite(Loan loan)
+        /// <summary>
+        /// Метод добавления кредита в список банковской системы
+        /// </summary>
+        /// <param name="loan">кредит, который следует добавить в банковскую систему</param>
+        static void AddLoan(Loan loan)
         {
             Loans.Add(loan);
         }
@@ -69,12 +82,24 @@ namespace BankSystem.Model
 
         public bool IsActive { get { return isActive; } set { isActive = value; OnPropertyChanged("IsActive"); } }
 
+        /// <summary>
+        /// Сумма кредита, которую следует выплатить
+        /// </summary>
         public decimal LoanAmount { get { return loanAmount-currentBalance; } set { loanAmount = value; OnPropertyChanged("LoanAmount"); } }
 
+        /// <summary>
+        /// Ставка по кредиту
+        /// </summary>
         public int Rate { get { return rate; } set { rate = value; OnPropertyChanged("Rate"); } }
 
+        /// <summary>
+        /// Начальная дата кредита
+        /// </summary>
         public DateTime StartPeriod { get { return startPeriod; } set { startPeriod = value; OnPropertyChanged("StartPeriod"); } }
 
+        /// <summary>
+        /// Текущая дата кредита
+        /// </summary>
         public DateTime CurrentPeriod { get { return currentPeriod; } set { currentPeriod = value; OnPropertyChanged("CurrentPeriod"); } }
 
 
@@ -95,6 +120,9 @@ namespace BankSystem.Model
 
         #region methods
 
+        /// <summary>
+        /// Переход на следующий месяц
+        /// </summary>
         public void GoNextMonth()
         {
             if (!isActive)
@@ -111,6 +139,9 @@ namespace BankSystem.Model
             
         }
 
+        /// <summary>
+        /// Проверка активности кредита
+        /// </summary>
         public void CheckActive()
         {
             if (loanAmount <= 0)

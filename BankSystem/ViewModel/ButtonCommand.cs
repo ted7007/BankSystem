@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace BankSystem.ViewModel
 {
+    /// <summary>
+    /// Интерфейс команды кнопки
+    /// </summary>
     class ButtonCommand : ICommand
     {
         private Action<object> execute;

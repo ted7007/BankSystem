@@ -16,8 +16,17 @@ namespace BankSystem.Model.Client
         static private List<BankClientProfile> BClientProfiles;
 
         static private int nowId;
+
+        /// <summary>
+        /// Свойство для выявления следующего индетефикатора
+        /// </summary>
         static private int NextId { get { BankClientProfile.nowId++; return BankClientProfile.nowId; } }
 
+        /// <summary>
+        /// Метод поиска профиля
+        /// </summary>
+        /// <param name="id"> индетефикатор профиля</param>
+        /// <returns></returns>
         static public BankClientProfile Find(int id)
         {
             foreach (var i in BClientProfiles)
@@ -31,9 +40,13 @@ namespace BankSystem.Model.Client
         static BankClientProfile()
         {
             BClientProfiles = new List<BankClientProfile>();
-            nowId = -1;
+            nowId = -1; // Стартовое значение -1, для первого профиля значение будет равно 0.
         }
 
+        /// <summary>
+        /// Метод добавления профиля в список профилей банковской системы
+        /// </summary>
+        /// <param name="bClientProfile">профиль, который следует добавить в список</param>
         static void AddBClientProfile(BankClientProfile bClientProfile)
         {
             BClientProfiles.Add(bClientProfile);
@@ -72,6 +85,9 @@ namespace BankSystem.Model.Client
         /// </summary>
         public string Name { get { return name; } }
 
+        /// <summary>
+        /// Коэффициент доверия профиля
+        /// </summary>
         public float ConfidenceCoefficient { get { return confidenceCoefficient; } set { confidenceCoefficient = value; OnPropertyChanged("ConfidenceCoefficient"); } }
 
         /// <summary>
@@ -115,13 +131,13 @@ namespace BankSystem.Model.Client
             this.loans = new ObservableCollection<Loan>();
             this.deposites = new ObservableCollection<Deposite.Deposite>();
 
-            BankClientProfile.AddBClientProfile(this);
+            BankClientProfile.AddBClientProfile(this);  // Добавление профиля в список профилей банковской системы.
 
         }
 
         #region methods
 
-        /// <summary>
+         /// <summary>
         /// Метод добавления нового банковского счёта
         /// </summary>
         /// <param name="currentBalance">баланс банковского счёта</param>
@@ -197,32 +213,32 @@ namespace BankSystem.Model.Client
             bool isFind;
             do
             {
-                isFind = false;
-                Loan removeL = null;
-                foreach(var i in Loans)
-                {
-                    if(!i.IsActive)
-                    {
-                        isFind = true;
-                        removeL = i;
-                        break;
-                    }
-                }
-
-                Deposite.Deposite removeD = null;
-                foreach (var i in Deposites)
-                {
-                    if (!i.IsActive)
-                    {
-                        isFind = true;
-                        removeD = i;
-                        break;
-                    }
-                }
-                if (isFind)
-                {
-                    loans.Remove(removeL);
-                    deposites.Remove(removeD);
+                isFind = false;                       //    Для нахождения неактивных объектов инициализируется флаг.
+                Loan removeL = null;                  //    Поиско проводится в do..while, т.к. необходимо проверять наличие неактивных объектов хотябы один раз.
+                foreach(var i in Loans)               //    
+                {                                     //
+                    if(!i.IsActive)                   //    
+                    {                                 //
+                        isFind = true;                //
+                        removeL = i;                  //
+                        break;                        //
+                    }                                 //
+                }                                     //
+                                                      //
+                Deposite.Deposite removeD = null;     //
+                foreach (var i in Deposites)          //
+                {                                     //
+                    if (!i.IsActive)                  //
+                    {                                 //
+                        isFind = true;                //
+                        removeD = i;                  //
+                        break;                        //
+                    }                                 //
+                }                                     //
+                if (isFind)                           //
+                {                                     //
+                    loans.Remove(removeL);            //
+                    deposites.Remove(removeD);        //
                 }
 
             } while (isFind);
@@ -231,6 +247,7 @@ namespace BankSystem.Model.Client
         }
 
         #endregion
+
 
         #region INPC
         public event PropertyChangedEventHandler PropertyChanged;
@@ -244,6 +261,9 @@ namespace BankSystem.Model.Client
 
     }
 
+    /// <summary>
+    /// перечисление типов депозита
+    /// </summary>
     enum DepositeType
     {
         Default,
