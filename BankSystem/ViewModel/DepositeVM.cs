@@ -1,6 +1,5 @@
 ﻿using BankSystem.Model.Client;
 using BankSystem.Model.Deposite;
-using BankSystem.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,8 +20,6 @@ namespace BankSystem.ViewModel
         private ComboBoxItem selectedProfileControlToTransfer;
 
         private ButtonCommand transferCommand;
-
-        private ButtonCommand checkLogsCommand;
 
         private int idToTransfer;
 
@@ -70,11 +67,6 @@ namespace BankSystem.ViewModel
                     
             } 
         }
-
-        /// <summary>
-        /// Команда для открытия журнала действий
-        /// </summary>
-        public ButtonCommand CheckLogsCommand { get { return checkLogsCommand ?? (checkLogsCommand = new ButtonCommand(a => CheckLogs())); } }
         #endregion
 
         public DepositeVM(Deposite deposite)
@@ -112,16 +104,6 @@ namespace BankSystem.ViewModel
             }
             BankClientProfile.Find(deposite.ProfileId).RemoveUnactiveControls();
             OnPropertyChanged("BankAccount");
-        }
-
-        /// <summary>
-        /// Метод для открытия окна с журналом действий
-        /// </summary>
-        public void CheckLogs()
-        {
-            AccountLogsWindow w = new AccountLogsWindow();
-            w.DataContext = Deposite.Logs;
-            w.ShowDialog();
         }
 
         #endregion

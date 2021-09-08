@@ -31,10 +31,5 @@ namespace BankSystem.Model
         /// Состояние объекта
         /// </summary>
         bool IsActive { get; set; }
-
-        /// <summary>
-        /// Журнал действий со счётом
-        /// </summary>
-        AccountLogs Logs { get; set; }
     }
 }

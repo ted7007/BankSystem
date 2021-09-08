@@ -23,7 +23,7 @@ namespace BankSystem.Model.Client
 
             if (account.CurrentBalance >= 50)
             {
-                account.CurrentBalance-=50;
+                account.Withdraw(50, "PaidSupport: -50 $");
                 OnPropertyChanged("BankAccounts");
                 return "U can get help in FAQ";
             }

@@ -55,7 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\AccountLogs.cs" />
     <Compile Include="Model\BankAccount.cs" />
     <Compile Include="Model\BankSystem.cs" />
     <Compile Include="Model\Client\BankClientProfile.cs" />
@@ -73,10 +72,6 @@
     <Compile Include="ViewModel\ButtonCommand.cs" />
     <Compile Include="ViewModel\ClientProfileVM.cs" />
     <Compile Include="ViewModel\DepositeVM.cs" />
-    <Compile Include="ViewModel\LoanWindowVM.cs" />
-    <Compile Include="View\AccountLogsWindow.xaml.cs">
-      <DependentUpon>AccountLogsWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\AccountWindow.xaml.cs">
       <DependentUpon>AccountWindow.xaml</DependentUpon>
     </Compile>
@@ -101,10 +96,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\AccountLogsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\AccountWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

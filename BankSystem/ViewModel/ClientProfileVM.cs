@@ -197,7 +197,7 @@ namespace BankSystem.ViewModel
                     if (SelectedLoan is null)
                         return;
                     LoanWindow lw = new LoanWindow();
-                    lw.DataContext = new LoanWindowVM(selectedLoan);
+                    lw.DataContext = selectedLoan;
                     lw.ShowDialog();
                     break;
             }

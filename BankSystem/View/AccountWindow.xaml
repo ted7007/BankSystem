@@ -14,7 +14,6 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -54,6 +53,5 @@
                 Grid.Row="4" Grid.Column="1"/>
         <Button Content="Fill" FontSize="20" Margin="10" Command="{Binding FillCommand}"
                 Grid.Row="4" Grid.Column="3"/>
-        <Button Content="Logs" Grid.Column="2" Grid.Row="5" Margin="10" FontSize="20" Command="{Binding CheckLogsCommand}"/>
     </Grid>
 </Window>

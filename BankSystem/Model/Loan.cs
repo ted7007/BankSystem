@@ -71,8 +71,6 @@ namespace BankSystem.Model
 
         private DateTime currentPeriod;
 
-        private AccountLogs logs;
-
         #endregion
 
         #region properties
@@ -80,22 +78,9 @@ namespace BankSystem.Model
 
         public int ProfileId { get { return profileId; } set { profileId = value; OnPropertyChanged("ProfileId"); } }
 
-        public decimal CurrentBalance 
-        {
-            get { return currentBalance; }
-            set
-            {
-                    Logs.AddLog($"[{Logs.CurrentDate.ToShortTimeString()}]: Изменение баланса на: {value-CurrentBalance}$");
-                    currentBalance = value;
-                    OnPropertyChanged("CurrentBalance"); 
-                    CheckActive(); 
-                    OnPropertyChanged("IsActive"); 
-            } 
-        }
+        public decimal CurrentBalance { get { return currentBalance; } set { currentBalance = value; OnPropertyChanged("CurrentBalance"); CheckActive(); OnPropertyChanged("IsActive"); } }
 
         public bool IsActive { get { return isActive; } set { isActive = value; OnPropertyChanged("IsActive"); } }
-
-        public AccountLogs Logs { get { return logs; } set { logs = value; OnPropertyChanged("Logs"); } }
 
         /// <summary>
         /// Сумма кредита, которую следует выплатить
@@ -129,7 +114,6 @@ namespace BankSystem.Model
             this.startPeriod = startPeriod;
             this.currentPeriod = startPeriod;
             this.isActive = true;
-            this.logs = new AccountLogs();
 
             Loan.Loans.Add(this);
         }
@@ -149,12 +133,10 @@ namespace BankSystem.Model
             if ((CurrentPeriod - StartPeriod).TotalDays / 365 >= 1)
             {
                 StartPeriod = CurrentPeriod;
-                decimal diff = LoanAmount * ((decimal)rate / 100);
-                LoanAmount += diff;
-                Logs.AddLog($"[{Logs.CurrentDate.ToShortTimeString()}]: Начисление на сумму кредита - {diff}$");
+                LoanAmount += LoanAmount * ((decimal)rate / 100);
             }
 
-
+            
         }
 
         /// <summary>

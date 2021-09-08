@@ -63,8 +63,6 @@
 
         <TextBlock Text="To fill deposite transfer sum from account on Loan's ID" FontSize="18" Background="WhiteSmoke"
                    Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Margin="5"/>
-
-        <Button Content="Logs" Grid.Column="3" Grid.Row="6" Margin="10" FontSize="20" Command="{Binding CheckLogsCommand}"/>
-
+        
     </Grid>
 </Window>
