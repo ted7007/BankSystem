@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using BankSystem.Model;
 using BankSystem.Model.Client;
+using BankSystem.View;
 
 namespace BankSystem.ViewModel
 {
@@ -22,6 +23,8 @@ namespace BankSystem.ViewModel
         private ButtonCommand transferCommand;
 
         private ButtonCommand fillCommand;
+
+        private ButtonCommand checkLogsCommand;
 
         private int idToTransfer;
 
@@ -66,6 +69,11 @@ namespace BankSystem.ViewModel
         /// Команда для пополнения
         /// </summary>
         public ButtonCommand FillCommand { get { return fillCommand ?? (fillCommand = new ButtonCommand(a => Fill())); } }
+
+        /// <summary>
+        /// Команда для открытия журнала действий
+        /// </summary>
+        public ButtonCommand CheckLogsCommand { get { return checkLogsCommand ?? (checkLogsCommand = new ButtonCommand(a => CheckLogs())); } }
         #endregion
 
         public BankAccountVM(BankAccount bankAccount)
@@ -114,6 +122,16 @@ namespace BankSystem.ViewModel
                 return;
             bankAccount.Fill(SumToFill);
             OnPropertyChanged("BankAccount");
+        }
+
+        /// <summary>
+        /// Метод для открытия окна с журналом действий
+        /// </summary>
+        public void CheckLogs()
+        {
+            AccountLogsWindow w = new AccountLogsWindow();
+            w.DataContext = BankAccount.Logs;
+            w.ShowDialog();
         }
 
         #endregion

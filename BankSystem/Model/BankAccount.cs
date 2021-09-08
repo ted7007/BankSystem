@@ -63,9 +63,9 @@ namespace BankSystem.Model
 
         private decimal currentBalance;
 
-        private ObservableCollection<string> logs;
-
         private bool isActive;
+
+        private AccountLogs logs;
 
         #endregion
 
@@ -75,14 +75,20 @@ namespace BankSystem.Model
 
         public int ProfileId { get { return profileId; } }
 
-        public decimal CurrentBalance { get { return currentBalance; }  set { currentBalance = value; } }
+        public decimal CurrentBalance 
+        {
+            get { return currentBalance; }
+            set
+            {
+                Logs.AddLog($"[{Logs.CurrentDate.ToShortTimeString()}]: Изменение баланса на : {value - CurrentBalance}$");
+                currentBalance = value;
+                OnPropertyChanged("CurrentBalance"); 
+            }
+        }
 
-        /// <summary>
-        /// список изменений
-        /// </summary>
-        public ObservableCollection<string> Logs { get { return logs; } private set { logs = value; } }
+        public AccountLogs Logs { get { return logs; } set { logs = value; OnPropertyChanged("Logs"); } }
 
-        public bool IsActive { get { return isActive; } set { isActive = false; } }
+        public bool IsActive { get { return isActive; } set { isActive = false; OnPropertyChanged("IsActive"); } }
 
         #endregion
 
@@ -90,10 +96,9 @@ namespace BankSystem.Model
         {
             this.profileId = id;
             this.currentBalance = currentBalance;
-            this.logs = new ObservableCollection<string>();
+            this.logs = new AccountLogs();
             this.id = NextId;
             this.isActive = true;
-            logs.Add($"[{DateTime.Now}] : Account created");
             BankAccount.AddBAccount(this);
         }
 
@@ -106,13 +111,13 @@ namespace BankSystem.Model
         /// <param name="sum"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        public bool Transfer(IProfileControl account, decimal sum, string log = "")
+        public bool Transfer(IProfileControl account, decimal sum)
         {
             if (!IsActive||sum>CurrentBalance)
                 return false;
             account.CurrentBalance += sum;
             CurrentBalance -= sum;
-            Logs.Add(log);
+            Logs.AddLog($"[{Logs.CurrentDate.ToShortTimeString()}]: Перевод на счёт №{account.Id} типа {account.GetType().Name} - {sum}$");
             return true;
         }
 
@@ -122,13 +127,13 @@ namespace BankSystem.Model
         /// <param name="sum"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        public bool Withdraw(decimal sum, string log = "")
+        public bool Withdraw(decimal sum)
         {
             if (!IsActive||sum>CurrentBalance)
                 return false;
             
             CurrentBalance -= sum;
-            Logs.Add(log);
+            Logs.AddLog($"[{Logs.CurrentDate.ToShortTimeString()}]: Снятие наличных - {sum}$");
             return true;
         }
 
@@ -138,12 +143,12 @@ namespace BankSystem.Model
         /// <param name="sum"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        public bool Fill(decimal sum, string log = "")
+        public bool Fill(decimal sum)
         {
             if (!isActive)
                 return false;
             CurrentBalance += sum;
-            Logs.Add(log);
+            Logs.AddLog($"[{Logs.CurrentDate.ToShortTimeString()}]: Пополнение на - {sum}$");
             return true;
         }
 

@@ -21,9 +21,12 @@ namespace BankSystem.Model.Deposite
                                                                                         //
             CurrentPeriod = CurrentPeriod.AddMonths(1);                                 //
             CheckActive();                                                              //
-            CurrentBalance = CurrentBalance * ((decimal)Rate / 100 + 1);                //
-        }                                                                               
-                                                                                        
+            decimal diff = CurrentBalance * ((decimal)Rate / 100);
+            CurrentBalance += diff;                                                     //
+            Logs.AddLog($"[{Logs.CurrentDate.ToShortTimeString()}]: Начисление на - {diff}$");
+
+        }
+
         public override void CheckActive()
         {
             if (CurrentBalance <= 0)
@@ -38,6 +41,7 @@ namespace BankSystem.Model.Deposite
                 return false;
             account.CurrentBalance += sum;
             CurrentBalance -= sum;
+            Logs.AddLog($"[{Logs.CurrentDate.ToShortTimeString()}]: Перевод на счёт №{account.Id} типа {account.GetType().Name} - {sum}$");
             return true;
         }
     }

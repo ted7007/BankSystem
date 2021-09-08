@@ -33,5 +33,6 @@
         <TextBlock Text="To pay transfer sum from account on Loan's ID" FontSize="20" Background="WhiteSmoke"
                    Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"/>
 
+        <Button Content="Logs" Grid.Column="2" Grid.Row="5" Margin="10" FontSize="20" Command="{Binding CheckLogsCommand}"/>
     </Grid>
 </Window>

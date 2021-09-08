@@ -84,23 +84,25 @@ namespace BankSystem.Model.Deposite
 
         #region fields
 
-        int id;
+       private int id;
 
-        int profileId;
+       private int profileId;
 
-        int rate;
+       private int rate;
 
-        DateTime startPeriod;
+       private DateTime startPeriod;
 
-        DateTime currentPeriod;
+       private DateTime currentPeriod;
 
-        DateTime finishPeriod;
+       private DateTime finishPeriod;
 
-        decimal currentBalance;
+       private decimal currentBalance;
 
-        bool isActive;
+       private bool isActive;
 
-        bool isAccrualsContinue;
+       private bool isAccrualsContinue;
+
+        AccountLogs logs;
         #endregion
 
         #region properties
@@ -109,9 +111,20 @@ namespace BankSystem.Model.Deposite
 
         public int ProfileId { get { return profileId; } }
 
-        public decimal CurrentBalance { get { return currentBalance; } set { currentBalance = value; OnPropertyChanged("CurrentBalance"); } }
+        public decimal CurrentBalance
+        {
+            get { return currentBalance; } 
+            set
+            {
+                Logs.AddLog($"[{Logs.CurrentDate.ToShortTimeString()}]: Изменение баланса на: {value - CurrentBalance}$");
+                currentBalance = value;
+                OnPropertyChanged("CurrentBalance"); 
+            } 
+        }
 
         public bool IsActive { get { return isActive; } set { isActive = value; OnPropertyChanged("IsActive"); } }
+
+        public AccountLogs Logs { get { return logs; } set { logs = value; OnPropertyChanged("Logs"); } }
 
         /// <summary>
         /// Начальная дата вклада
@@ -150,6 +163,7 @@ namespace BankSystem.Model.Deposite
             this.isActive = true;
             this.isAccrualsContinue = true;
             this.id = Deposite.NextId;
+            this.logs = new AccountLogs();
             Deposite.AddDeposite(this);
         }
 
