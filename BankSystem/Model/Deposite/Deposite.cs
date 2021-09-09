@@ -101,6 +101,8 @@ namespace BankSystem.Model.Deposite
         bool isActive;
 
         bool isAccrualsContinue;
+
+        public event Action<EventArgs.NotifyEventArgs> BankNotifyEvent;
         #endregion
 
         #region properties
@@ -139,7 +141,7 @@ namespace BankSystem.Model.Deposite
         public bool IsAccrualsContinue { get { return isAccrualsContinue; } set { isAccrualsContinue = value; OnPropertyChanged("IsAccrualsContinue"); } }
 
         #endregion
-        public Deposite(int rate, int profileId, decimal startBalance, DateTime startPeriod, DateTime finishPeriod)
+        public Deposite(Action<EventArgs.NotifyEventArgs> notifyRelease, int rate, int profileId, decimal startBalance, DateTime startPeriod, DateTime finishPeriod)
         {
             this.rate = rate;
             this.finishPeriod = finishPeriod;
@@ -150,6 +152,8 @@ namespace BankSystem.Model.Deposite
             this.isActive = true;
             this.isAccrualsContinue = true;
             this.id = Deposite.NextId;
+            this.BankNotifyEvent += notifyRelease;
+
             Deposite.AddDeposite(this);
         }
 
@@ -163,14 +167,59 @@ namespace BankSystem.Model.Deposite
         /// <summary>
         /// Метод проверки активности депозита.
         /// </summary>
-        abstract public void CheckActive();
+        public void CheckActive()
+        {
+            if (CurrentBalance <= 0)
+                IsActive = false;
+            if (CurrentPeriod >= FinishPeriod)
+                IsAccrualsContinue = false;
+        }
 
         /// <summary>
         /// Метод перевода денежек на другой счёт.
         /// </summary>
         /// <param name="account">счёт, на который следует перевести денежки</param>
         /// <param name="sum">сумма, которую следует перевести</param>
-        abstract public bool Transfer(IProfileControl account, decimal sum);
+        public void Transfer(IProfileControl account, decimal sum)
+        {
+            if (!IsActive || sum > CurrentBalance)
+            {
+                CallNotify(new EventArgs.AccountEventArgs(account, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Transfer));
+                return;
+            }
+            account.Put(this, sum);
+            this.CurrentBalance -= sum;
+            CallNotify(new EventArgs.AccountEventArgs(account, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Transfer));
+
+        }
+
+        public void Put(IProfileControl sender, decimal sum)
+        {
+            if (!IsActive)
+            {
+                CallNotify(new EventArgs.AccountEventArgs(sender, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Take));
+                return;
+            }
+            this.CurrentBalance += sum;
+            CallNotify(new EventArgs.AccountEventArgs(sender, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Put));
+
+        }
+
+        public void Take(IProfileControl sender, decimal sum)
+        {
+            if (!IsActive | this.CurrentBalance < sum)
+            {
+                CallNotify(new EventArgs.AccountEventArgs(sender, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Take));
+                return;
+            }
+            this.CurrentBalance -= sum;
+            CallNotify(new EventArgs.AccountEventArgs(sender, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Take));
+        }
+
+        internal void CallNotify(EventArgs.NotifyEventArgs e)
+        {
+            BankNotifyEvent?.Invoke(e);
+        }
 
         #endregion
 

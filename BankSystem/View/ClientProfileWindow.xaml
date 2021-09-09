@@ -140,39 +140,40 @@
             <TabItem Header="Profile info" FontSize="25">
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.5*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="5*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock FontSize="20" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" Margin="10"
+                    <TextBlock FontSize="20" Grid.Column="2" Grid.Row="0" TextWrapping="Wrap" Margin="10"
                                Background="WhiteSmoke">
                         Name: <TextBlock  Text="{Binding ClientProfile.Name}"/>
                     </TextBlock>
-                    <TextBlock FontSize="20" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="10"
+                    <TextBlock FontSize="20" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Margin="10"
                                Background="WhiteSmoke">
                         ID: <TextBlock  Text="{Binding ClientProfile.Id}"/>
                     </TextBlock>
-                    <TextBlock FontSize="20" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" TextWrapping="Wrap" Margin="10"
+                    <TextBlock FontSize="20" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" TextWrapping="Wrap" Margin="10"
                                Background="WhiteSmoke">
                         Confidence Coefficient:<TextBlock  Text="{Binding ClientProfile.ConfidenceCoefficient}"/>
                     </TextBlock>
-                    <TextBlock FontSize="20" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" Margin="10"
+                    <TextBlock FontSize="20" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="10"
                                Background="WhiteSmoke">
                         Deposite Rate: <TextBlock  Text="{Binding ClientProfile.DepositeRate}"/>
                     </TextBlock>
-                    <TextBlock FontSize="20" Grid.Column="2" Grid.Row="3" TextWrapping="Wrap" Margin="10"
+                    <TextBlock FontSize="20" Grid.Column="2" Grid.Row="2" TextWrapping="Wrap" Margin="10"
                                Background="WhiteSmoke">
                         Loan Rate: <TextBlock  Text="{Binding ClientProfile.LoanRate}"/>
                     </TextBlock>
-
+                    <ListBox    Grid.Row="3" Grid.RowSpan="2" Margin="10" Grid.Column="0" Grid.ColumnSpan="4" 
+                                ItemsSource="{Binding ClientProfile.Logs.Logs}" FontSize="12" Background="WhiteSmoke"/>
                 </Grid>
             </TabItem>
 

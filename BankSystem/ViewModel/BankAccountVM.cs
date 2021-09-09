@@ -112,7 +112,7 @@ namespace BankSystem.ViewModel
         {
             if (SumToFill == 0)
                 return;
-            bankAccount.Fill(SumToFill);
+            bankAccount.Put(BankAccount, SumToFill);
             OnPropertyChanged("BankAccount");
         }
 

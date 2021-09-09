@@ -11,7 +11,8 @@ namespace BankSystem.Model.Deposite
     /// </summary>
     class DepositeWithCapitalization : Deposite
     {
-        public DepositeWithCapitalization(int rate, int profileId, decimal startBalance, DateTime startPeriod, DateTime finishPeriod) : base(rate, profileId, startBalance, startPeriod, finishPeriod) { }
+        public DepositeWithCapitalization(Action<EventArgs.NotifyEventArgs> notifyRelease,int rate, int profileId, decimal startBalance, DateTime startPeriod, DateTime finishPeriod)
+            : base(notifyRelease, rate, profileId, startBalance, startPeriod, finishPeriod) { }
 
         public override void GoNextMounth()
         {
@@ -20,25 +21,11 @@ namespace BankSystem.Model.Deposite
                 return;                                                                 //
                                                                                         //
             CurrentPeriod = CurrentPeriod.AddMonths(1);                                 //
-            CheckActive();                                                              //
-            CurrentBalance = CurrentBalance * ((decimal)Rate / 100 + 1);                //
+            CheckActive();
+            decimal diff = CurrentBalance * ((decimal)Rate / 100);
+            CallNotify(new EventArgs.AccountEventArgs(this, "Транзакция успешна", diff, EventArgs.AccountNotifyType.AccrualOfInterest));
+            CurrentBalance += diff;                                                    //
         }                                                                               
-                                                                                        
-        public override void CheckActive()
-        {
-            if (CurrentBalance <= 0)
-                IsActive = false;
-            if (CurrentPeriod >= FinishPeriod)
-                IsAccrualsContinue = false;
-        }
 
-        public override bool Transfer(IProfileControl account, decimal sum)
-        {
-            if (!IsActive || sum > CurrentBalance)
-                return false;
-            account.CurrentBalance += sum;
-            CurrentBalance -= sum;
-            return true;
-        }
     }
 }

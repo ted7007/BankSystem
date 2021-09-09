@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BankSystem.Model.EventArgs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -70,7 +71,8 @@ namespace BankSystem.Model
         private DateTime startPeriod;
 
         private DateTime currentPeriod;
-
+        
+        public event Action<NotifyEventArgs> BankNotifyEvent;
         #endregion
 
         #region properties
@@ -78,7 +80,7 @@ namespace BankSystem.Model
 
         public int ProfileId { get { return profileId; } set { profileId = value; OnPropertyChanged("ProfileId"); } }
 
-        public decimal CurrentBalance { get { return currentBalance; } set { currentBalance = value; OnPropertyChanged("CurrentBalance"); CheckActive(); OnPropertyChanged("IsActive"); } }
+        public decimal CurrentBalance { get { return currentBalance; } set { currentBalance = value; OnPropertyChanged("CurrentBalance"); } }
 
         public bool IsActive { get { return isActive; } set { isActive = value; OnPropertyChanged("IsActive"); } }
 
@@ -105,7 +107,7 @@ namespace BankSystem.Model
 
         #endregion
 
-        public Loan(decimal startLoanAmount, int loanRate, DateTime startPeriod, int profileId)
+        public Loan(Action<EventArgs.NotifyEventArgs> notifyRelease, decimal startLoanAmount, int loanRate, DateTime startPeriod, int profileId)
         {
             this.loanAmount = startLoanAmount;
             this.rate = loanRate;
@@ -114,6 +116,7 @@ namespace BankSystem.Model
             this.startPeriod = startPeriod;
             this.currentPeriod = startPeriod;
             this.isActive = true;
+            this.BankNotifyEvent += notifyRelease;
 
             Loan.Loans.Add(this);
         }
@@ -133,7 +136,9 @@ namespace BankSystem.Model
             if ((CurrentPeriod - StartPeriod).TotalDays / 365 >= 1)
             {
                 StartPeriod = CurrentPeriod;
-                LoanAmount += LoanAmount * ((decimal)rate / 100);
+                decimal diff = LoanAmount * ((decimal)rate / 100);
+                BankNotifyEvent?.Invoke(new AccountEventArgs(this, "Транзакция успешна", diff, AccountNotifyType.AccrualOfInterest));
+                this.LoanAmount += diff;
             }
 
             
@@ -146,12 +151,41 @@ namespace BankSystem.Model
         {
             if (loanAmount <= 0)
                 isActive = false;
+            OnPropertyChanged("IsActive");
         }
 
+        public void Put(IProfileControl sender, decimal sum)
+        {
+            if (!IsActive)
+            {
+                BankNotifyEvent?.Invoke(new AccountEventArgs(this, "Транзакция отклонена.", sum, AccountNotifyType.Take));
+
+                return;
+            }
+            this.CurrentBalance += sum;
+            CheckActive(); 
+            BankNotifyEvent?.Invoke(new AccountEventArgs(this, "Транзакция успешна", sum, AccountNotifyType.Put));
+
+        }
+
+        public void Take(IProfileControl sender, decimal sum)
+        {
+            if (!IsActive||!(sender is Loan && sender.Id == Id))        /// Если вызывает метод не этот же класс - отбой, т.к. с кредита нельзя снимать деньги.
+            {
+                BankNotifyEvent?.Invoke(new AccountEventArgs(this, "Транзакция отклонена.", sum, AccountNotifyType.Take));
+
+                return;
+            }
+            this.CurrentBalance -= sum;
+            BankNotifyEvent?.Invoke(new AccountEventArgs(this, "Транзакция успешна.", sum, AccountNotifyType.Take));
+
+        }
         #endregion
 
         #region INPC
         public event PropertyChangedEventHandler PropertyChanged;
+        
+
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             if (PropertyChanged != null)

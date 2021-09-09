@@ -65,8 +65,12 @@
     <Compile Include="Model\Deposite\DefaultDeposite.cs" />
     <Compile Include="Model\Deposite\Deposite.cs" />
     <Compile Include="Model\Deposite\DepositeWithCapitalization.cs" />
+    <Compile Include="Model\EventArgs\AccountEventArgs.cs" />
+    <Compile Include="Model\EventArgs\NotifyEventArgs.cs" />
+    <Compile Include="Model\IBankNotifyEvent.cs" />
     <Compile Include="Model\IProfileControl.cs" />
     <Compile Include="Model\Loan.cs" />
+    <Compile Include="Model\NotificationLogs.cs" />
     <Compile Include="ViewModel\BankAccountVM.cs" />
     <Compile Include="ViewModel\BankSystemVM.cs" />
     <Compile Include="ViewModel\ButtonCommand.cs" />

@@ -63,9 +63,12 @@ namespace BankSystem.Model
 
         private decimal currentBalance;
 
-        private ObservableCollection<string> logs;
-
         private bool isActive;
+
+        /// <summary>
+        /// событие оповещений
+        /// </summary>
+        public event Action<EventArgs.NotifyEventArgs> BankNotifyEvent;
 
         #endregion
 
@@ -77,24 +80,18 @@ namespace BankSystem.Model
 
         public decimal CurrentBalance { get { return currentBalance; }  set { currentBalance = value; } }
 
-        /// <summary>
-        /// список изменений
-        /// </summary>
-        public ObservableCollection<string> Logs { get { return logs; } private set { logs = value; } }
-
         public bool IsActive { get { return isActive; } set { isActive = false; } }
 
         #endregion
 
-        public BankAccount(int profileId, int currentBalance = 0)
+        public BankAccount( Action<EventArgs.NotifyEventArgs> notifyRelease, int profileId, int currentBalance = 0)
         {
             this.profileId = id;
             this.currentBalance = currentBalance;
-            this.logs = new ObservableCollection<string>();
             this.id = NextId;
             this.isActive = true;
-            logs.Add($"[{DateTime.Now}] : Account created");
             BankAccount.AddBAccount(this);
+            this.BankNotifyEvent += notifyRelease;
         }
 
         #region methods
@@ -106,14 +103,16 @@ namespace BankSystem.Model
         /// <param name="sum"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        public bool Transfer(IProfileControl account, decimal sum, string log = "")
+        public void Transfer(IProfileControl account, decimal sum)
         {
-            if (!IsActive||sum>CurrentBalance)
-                return false;
-            account.CurrentBalance += sum;
-            CurrentBalance -= sum;
-            Logs.Add(log);
-            return true;
+            if (!IsActive || sum > CurrentBalance || (account is BankAccount&&account.Id==Id))
+            {
+                BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(account, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Transfer));
+                return;
+            }
+            account.Put(this, sum);
+            this.CurrentBalance -= sum;
+            BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(account, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Transfer));
         }
 
         /// <summary>
@@ -122,14 +121,18 @@ namespace BankSystem.Model
         /// <param name="sum"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        public bool Withdraw(decimal sum, string log = "")
+        public void Take(IProfileControl sender, decimal sum)
         {
             if (!IsActive||sum>CurrentBalance)
-                return false;
+            {
+                BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Take));
+                return ;
+            }
+           
             
             CurrentBalance -= sum;
-            Logs.Add(log);
-            return true;
+            BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Take));
+
         }
 
         /// <summary>
@@ -138,13 +141,16 @@ namespace BankSystem.Model
         /// <param name="sum"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        public bool Fill(decimal sum, string log = "")
+        public void Put(IProfileControl sender, decimal sum)
         {
             if (!isActive)
-                return false;
+            {
+                BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Put));
+
+                return;
+            }
             CurrentBalance += sum;
-            Logs.Add(log);
-            return true;
+            BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Put));
         }
 
         #endregion

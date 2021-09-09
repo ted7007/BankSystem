@@ -71,6 +71,8 @@ namespace BankSystem.Model.Client
 
         private int loanRate;
 
+        private NotificationLogs logs;
+
         #endregion
 
         #region properties
@@ -115,6 +117,8 @@ namespace BankSystem.Model.Client
         /// </summary>
         public int LoanRate { get { return loanRate; } private set { loanRate = value; OnPropertyChanged("LoanRate"); } }
 
+        public NotificationLogs Logs { get { return logs; } set { logs = value; OnPropertyChanged("Logs"); } }
+
 
         #endregion
 
@@ -130,6 +134,7 @@ namespace BankSystem.Model.Client
             this.loanRate = confidenceCoefficient < 1 ? loanRate * 2 : loanRate;
             this.loans = new ObservableCollection<Loan>();
             this.deposites = new ObservableCollection<Deposite.Deposite>();
+            this.logs = new NotificationLogs();
 
             BankClientProfile.AddBClientProfile(this);  // Добавление профиля в список профилей банковской системы.
 
@@ -143,7 +148,8 @@ namespace BankSystem.Model.Client
         /// <param name="currentBalance">баланс банковского счёта</param>
         public void AddBankAccount(int currentBalance = 0)
         {
-            BankAccounts.Add(new BankAccount(id, currentBalance));
+            BankAccount newBA = new BankAccount(Logs.AddLog, id, currentBalance);
+            BankAccounts.Add(newBA);
             OnPropertyChanged("BankAccounts");
         }
 
@@ -154,7 +160,8 @@ namespace BankSystem.Model.Client
         /// <param name="startPeriod">Дата взятия кредита</param>
         public void AddLoan(decimal startLoanAmount, DateTime startPeriod)
         {
-            Loans.Add(new Loan(startLoanAmount, LoanRate, startPeriod, Id));
+            Loan newL = new Loan(Logs.AddLog, startLoanAmount, LoanRate, startPeriod, Id);
+            Loans.Add(newL);
             OnPropertyChanged("Loans");
         }
 
@@ -170,10 +177,10 @@ namespace BankSystem.Model.Client
             switch(type)
             {
                 case DepositeType.Default:
-                    Deposites.Add(new DefaultDeposite(DepositeRate, Id,startBalance, startPeriod, finishPeriod));
+                    Deposites.Add(new DefaultDeposite(Logs.AddLog, DepositeRate, Id,startBalance, startPeriod, finishPeriod));
                     break;
                 case DepositeType.WithCapitalization:
-                    Deposites.Add(new DepositeWithCapitalization(DepositeRate, Id, startBalance, startPeriod, finishPeriod));
+                    Deposites.Add(new DepositeWithCapitalization(Logs.AddLog, DepositeRate, Id, startBalance, startPeriod, finishPeriod));
                     break;
             }
             OnPropertyChanged("Deposites");
