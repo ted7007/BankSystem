@@ -14,7 +14,7 @@ namespace BankSystem.Model
     /// Банковский отдел по работе с T клиентами
     /// </summary>
     /// <typeparam name="T">тип клиента, с которым работает банковский отдел</typeparam>
-    class CustomerServiceDepartament<T> : INotifyPropertyChanged
+    class CustomerServiceDepartament<T> : INotifyPropertyChanged, IBankNotifyEvent
     where T : BankClientProfile
     {
         #region fields
@@ -24,6 +24,8 @@ namespace BankSystem.Model
         private int depositeRate;
 
         private int loanRate;
+
+        public event Action<EventArgs.NotifyEventArgs> BankNotifyEvent;
         #endregion
 
         #region properties
@@ -62,6 +64,7 @@ namespace BankSystem.Model
         {
             Profiles.Add(profile);
             OnPropertyChanged("Profiles");
+            BankNotifyEvent += profile.Logs.AddLog;
         }
 
         /// <summary>
@@ -72,6 +75,8 @@ namespace BankSystem.Model
         {
             Profiles.Remove(profile);
             OnPropertyChanged("Profiles");
+            BankNotifyEvent -= profile.Logs.AddLog;
+
         }
 
         /// <summary>
@@ -83,6 +88,11 @@ namespace BankSystem.Model
             {
                 i.GoNextMonth();
             }    
+        }
+
+        public void CallNotify(object sender, string message)
+        {
+            BankNotifyEvent?.Invoke(new EventArgs.NotifyEventArgs(sender, message));
         }
 
         #endregion

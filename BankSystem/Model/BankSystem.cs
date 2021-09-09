@@ -66,7 +66,6 @@ namespace BankSystem.Model
 
         private CustomerServiceDepartament<EntityClient> entityClientDepartament;
 
-
         #endregion
 
         #region properties
@@ -77,6 +76,12 @@ namespace BankSystem.Model
 
         public CustomerServiceDepartament<EntityClient> EntityClientDepartament { get { return entityClientDepartament; } }
 
+        /// <summary>
+        /// Часто задаваемые вопросы, помощь по использования приложения
+        /// </summary>
+
+        public string FAQ { get; set; }
+
         #endregion
 
         public BankSystem(int defaultDepositeRate, int defaultLoanRate)
@@ -84,6 +89,11 @@ namespace BankSystem.Model
             this.regularUserDepartament = new CustomerServiceDepartament<RegularUser>(defaultDepositeRate, defaultLoanRate);
             this.vIPClientDepartament = new CustomerServiceDepartament<VIPClient>(defaultDepositeRate * 2, defaultLoanRate * 2);
             this.entityClientDepartament = new CustomerServiceDepartament<EntityClient>(defaultDepositeRate * 2, defaultLoanRate * 2);
+            this.FAQ = "The banking system welcomes you. You can open and close accounts; \n" +
+                        "make transfers from one account to another; \n" +
+                        "open deposits and loans. \n" +
+                        "You can also go to the next month to change the accounts of loans and deposits. \n" +
+                        "\n Update 09.09.2021: Added Notifications in ProfileInfo";
         }
 
         #region methods
@@ -149,6 +159,22 @@ namespace BankSystem.Model
             EntityClientDepartament.GoNextMonth();
         }
 
+        public void CallNotify(string message, DepartamentType departamentType)
+        {
+            switch(departamentType)
+            {
+                case DepartamentType.Regular:
+                    RegularUserDepartament.CallNotify(this, message);
+                    break;
+                case DepartamentType.VIP:
+                    VIPClientDepartament.CallNotify(this, message);
+                    break;
+                case DepartamentType.Entity:
+                    EntityClientDepartament.CallNotify(this, message);
+                    break;
+            }
+        }
+
         #endregion
 
         #region INPC
@@ -162,5 +188,12 @@ namespace BankSystem.Model
         }
 
         #endregion
+    }
+    
+    enum DepartamentType
+    {
+        Regular,
+        VIP,
+        Entity
     }
 }

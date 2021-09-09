@@ -37,8 +37,6 @@ namespace BankSystem.ViewModel
 
         private TabItem selectedDepartament;
 
-        private string fAQ;
-
         #endregion
 
         #region properties
@@ -103,20 +101,13 @@ namespace BankSystem.ViewModel
         /// </summary>
         public ButtonCommand ShowFAQCommand { get { return showFAQCommand ?? (showFAQCommand = new ButtonCommand(sender => MessageBox.Show(FAQ))); } }
 
-        /// <summary>
-        /// Часто задаваемые вопросы, помощь по использования приложения
-        /// </summary>
-        public string FAQ { get { return fAQ; } set { fAQ = value; OnPropertyChanged("FAQ"); } }
+        public string FAQ { get { return bankSystem.FAQ; } }
 
         #endregion
 
         public BankSystemVM()
         {
             this.bankSystem = Model.BankSystem.GenerateSystem(12, 24, 5);
-            this.fAQ = "The banking system welcomes you. You can open and close accounts; \n" +
-                        "make transfers from one account to another; \n" +
-                        "open deposits and loans. \n" +
-                        "You can also go to the next month to change the accounts of loans and deposits. \n";
         }
 
         #region methods

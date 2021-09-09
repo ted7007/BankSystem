@@ -23,7 +23,7 @@ namespace BankSystem.Model.Deposite
             CurrentPeriod = CurrentPeriod.AddMonths(1);                                 //
             CheckActive();
             decimal diff = CurrentBalance * ((decimal)Rate / 100);
-            CallNotify(new EventArgs.AccountEventArgs(this, "Транзакция успешна", diff, EventArgs.AccountNotifyType.AccrualOfInterest));
+            CallNotify(new EventArgs.AccountEventArgs(this, "Transaction succesful finished", diff, EventArgs.AccountNotifyType.AccrualOfInterest));
             CurrentBalance += diff;                                                    //
         }                                                                               
 

@@ -39,13 +39,13 @@ namespace BankSystem.Model
             switch(e.GetType().Name)
             {
                 case "NotifyEventArgs":
-                    logs.Add($"[{BankSystem.CurrentDate.ToString()}|{(e.Sender as Client.BankClientProfile).Name}]: {e.Message}");
+                    logs.Add($"\n ---Notification---\n[{BankSystem.CurrentDate.ToString()}|{e.Sender.GetType().Name}] - Message: {e.Message}");
                     break;
                 case "AccountEventArgs":
                     AccountEventArgs accountE = e as AccountEventArgs;
-                    logs.Add($"[{BankSystem.CurrentDate.ToString()}|{(accountE.Sender as IProfileControl).GetType().Name} №{(accountE.Sender as IProfileControl).Id}] - " +
-                             $"Тип транзакции: {accountE.Type}; Сумма транзакции: {accountE.Sum}$ \n" +
-                             $"Сообщение: {accountE.Message}");
+                    logs.Add($"---Transaction---\n[{BankSystem.CurrentDate.ToString()}|{(accountE.Sender as IProfileControl).GetType().Name} №{(accountE.Sender as IProfileControl).Id}] - " +
+                             $"Type of transaction: {accountE.Type}; Sum of transaction: {accountE.Sum}$ \n" +
+                             $"Message: {accountE.Message}");
                     break;
             }
             

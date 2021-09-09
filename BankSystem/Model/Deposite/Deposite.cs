@@ -155,6 +155,7 @@ namespace BankSystem.Model.Deposite
             this.BankNotifyEvent += notifyRelease;
 
             Deposite.AddDeposite(this);
+            BankNotifyEvent?.Invoke(new EventArgs.NotifyEventArgs(this, $"new {this.GetType().Name} №{this.Id} claimed."));
         }
 
         #region methods
@@ -184,12 +185,12 @@ namespace BankSystem.Model.Deposite
         {
             if (!IsActive || sum > CurrentBalance)
             {
-                CallNotify(new EventArgs.AccountEventArgs(account, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Transfer));
+                CallNotify(new EventArgs.AccountEventArgs(account, "Transaction canceled", sum, EventArgs.AccountNotifyType.Transfer));
                 return;
             }
             account.Put(this, sum);
             this.CurrentBalance -= sum;
-            CallNotify(new EventArgs.AccountEventArgs(account, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Transfer));
+            CallNotify(new EventArgs.AccountEventArgs(account, "Transaction succesful finished", sum, EventArgs.AccountNotifyType.Transfer));
 
         }
 
@@ -197,11 +198,11 @@ namespace BankSystem.Model.Deposite
         {
             if (!IsActive)
             {
-                CallNotify(new EventArgs.AccountEventArgs(sender, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Take));
+                CallNotify(new EventArgs.AccountEventArgs(sender, "Transaction canceled", sum, EventArgs.AccountNotifyType.Take));
                 return;
             }
             this.CurrentBalance += sum;
-            CallNotify(new EventArgs.AccountEventArgs(sender, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Put));
+            CallNotify(new EventArgs.AccountEventArgs(sender, "Transaction succesful finished", sum, EventArgs.AccountNotifyType.Put));
 
         }
 
@@ -209,11 +210,11 @@ namespace BankSystem.Model.Deposite
         {
             if (!IsActive | this.CurrentBalance < sum)
             {
-                CallNotify(new EventArgs.AccountEventArgs(sender, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Take));
+                CallNotify(new EventArgs.AccountEventArgs(sender, "Transaction canceled", sum, EventArgs.AccountNotifyType.Take));
                 return;
             }
             this.CurrentBalance -= sum;
-            CallNotify(new EventArgs.AccountEventArgs(sender, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Take));
+            CallNotify(new EventArgs.AccountEventArgs(sender, "Transaction succesful finished", sum, EventArgs.AccountNotifyType.Take));
         }
 
         internal void CallNotify(EventArgs.NotifyEventArgs e)

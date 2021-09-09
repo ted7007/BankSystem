@@ -92,6 +92,8 @@ namespace BankSystem.Model
             this.isActive = true;
             BankAccount.AddBAccount(this);
             this.BankNotifyEvent += notifyRelease;
+
+            BankNotifyEvent?.Invoke(new EventArgs.NotifyEventArgs(this, $"new {this.GetType().Name} №{this.Id} claimed."));
         }
 
         #region methods
@@ -107,12 +109,12 @@ namespace BankSystem.Model
         {
             if (!IsActive || sum > CurrentBalance || (account is BankAccount&&account.Id==Id))
             {
-                BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(account, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Transfer));
+                BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(account, "Transaction canceled", sum, EventArgs.AccountNotifyType.Transfer));
                 return;
             }
             account.Put(this, sum);
             this.CurrentBalance -= sum;
-            BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(account, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Transfer));
+            BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(account, "Transaction succesful finished", sum, EventArgs.AccountNotifyType.Transfer));
         }
 
         /// <summary>
@@ -125,13 +127,13 @@ namespace BankSystem.Model
         {
             if (!IsActive||sum>CurrentBalance)
             {
-                BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Take));
+                BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Transaction canceled", sum, EventArgs.AccountNotifyType.Take));
                 return ;
             }
            
             
             CurrentBalance -= sum;
-            BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Take));
+            BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Transaction succesful finished", sum, EventArgs.AccountNotifyType.Take));
 
         }
 
@@ -145,12 +147,12 @@ namespace BankSystem.Model
         {
             if (!isActive)
             {
-                BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Транзакция отклонена", sum, EventArgs.AccountNotifyType.Put));
+                BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Transaction canceled", sum, EventArgs.AccountNotifyType.Put));
 
                 return;
             }
             CurrentBalance += sum;
-            BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Транзакция успешна", sum, EventArgs.AccountNotifyType.Put));
+            BankNotifyEvent?.Invoke(new EventArgs.AccountEventArgs(sender, "Transaction succesful finished", sum, EventArgs.AccountNotifyType.Put));
         }
 
         #endregion
