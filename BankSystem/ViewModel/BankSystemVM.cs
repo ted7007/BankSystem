@@ -139,16 +139,28 @@ namespace BankSystem.ViewModel
             switch (selectedDepartament.Header as string)
             {
                 case "Regular Clients":
-                    if (!(SelectedRegularProfile is null))
-                        RegularDepartament.RemoveProfile(SelectedRegularProfile);
+                    if ((SelectedRegularProfile is null))
+                    {
+                        MessageBox.Show("The profile to delete is not selected.");
+                        return;
+                    }    
+                    RegularDepartament.RemoveProfile(SelectedRegularProfile);
                     break;
                 case "VIP Clients":
-                    if (!(SelectedVIPClient is null))
-                        VIPDepartament.RemoveProfile(SelectedVIPClient);
+                    if ((SelectedVIPClient is null))
+                    {
+                        MessageBox.Show("The profile to delete is not selected.");
+                        return;
+                    }
+                    VIPDepartament.RemoveProfile(SelectedVIPClient);
                     break;
                 case "Entity Clients":
-                    if (!(SelectedEntityClient is null))
-                        EntityDepartament.RemoveProfile(SelectedEntityClient);
+                    if ((SelectedEntityClient is null))
+                    {
+                        MessageBox.Show("The profile to delete is not selected.");
+                        return;
+                    }
+                    EntityDepartament.RemoveProfile(SelectedEntityClient);
                     break;
             }
         }
@@ -162,21 +174,30 @@ namespace BankSystem.ViewModel
             {
                 case "Regular Clients":
                     if (SelectedRegularProfile is null)
+                    {
+                        MessageBox.Show("The profile to edit is not selected.");
                         return;
+                    }
                     ClientProfileWindow rw = new ClientProfileWindow();
                     rw.DataContext = new ClientProfileVM<RegularUser>(SelectedRegularProfile);
                     rw.ShowDialog();
                     break;
                 case "VIP Clients":
                     if (SelectedVIPClient is null)
+                    {
+                        MessageBox.Show("The profile to edit is not selected.");
                         return;
+                    }
                     ClientProfileWindow vw = new ClientProfileWindow();
                     vw.DataContext = new ClientProfileVM<VIPClient>(SelectedVIPClient);
                     vw.ShowDialog();
                     break;
                 case "Entity Clients":
                     if (SelectedEntityClient is null)
+                    {
+                        MessageBox.Show("The profile to edit is not selected.");
                         return;
+                    }
                     ClientProfileWindow ew = new ClientProfileWindow();
                     ew.DataContext = new ClientProfileVM<EntityClient>(SelectedEntityClient);
                     ew.ShowDialog();

@@ -6,6 +6,15 @@
         xmlns:local="clr-namespace:BankSystem.View"
         mc:Ignorable="d"
         Title="ClientProfileWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
         <TabControl TabStripPlacement="Left" SelectedItem="{Binding SelectedProfileControl}">
             <TabItem Header="Accounts" FontSize="25">
@@ -137,7 +146,8 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Profile info" FontSize="25">
+            <TabItem Name="ProfileInfoItem" Header="Profile Info" FontSize="25" >
+                
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.5*"/>

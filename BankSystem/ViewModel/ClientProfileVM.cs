@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using BankSystem.View;
+using System.Windows;
 
 namespace BankSystem.ViewModel
 {
@@ -149,8 +150,11 @@ namespace BankSystem.ViewModel
                     break;
 
                 case "Deposites":
-                    if (NewDepositeTypeString is null|| NewDepositeMonths == 0 || NewDepositeStartBalance == 0)
+                    if (NewDepositeTypeString is null || NewDepositeMonths == 0 || NewDepositeStartBalance == 0)
+                    {
+                        MessageBox.Show("There is not enough information to open a deposit.");
                         return;
+                    }
 
                     DepositeType dt;
                     switch (NewDepositeTy﻿peString.Content)
@@ -166,6 +170,11 @@ namespace BankSystem.ViewModel
                     }
                     break;
                 case "Loans":
+                    if(newLoanLoanAmount<=0)
+                    {
+                        MessageBox.Show("The amount of the loan payment cannot be less than / equal to 0");
+                        return;
+                    }
                     clientProfile.AddLoan(NewLoanLoanAmount, BankSystem.Model.BankSystem.CurrentDate);
                     break;
             }
@@ -180,7 +189,10 @@ namespace BankSystem.ViewModel
             {
                 case "Accounts":
                     if (SelectedAccount is null)
+                    {
+                        MessageBox.Show("The invoice is not selected for editing.");
                         return;
+                    }
                     AccountWindow aw = new AccountWindow();
                     aw.DataContext = new BankAccountVM(SelectedAccount);
                     aw.ShowDialog();
@@ -188,14 +200,21 @@ namespace BankSystem.ViewModel
 
                 case "Deposites":
                     if (SelectedDeposite is null)
+                    {
+                        MessageBox.Show("The contribution for editing is not selected.");
                         return;
+                    }
                     DepositeWindow dw = new DepositeWindow();
                     dw.DataContext = new DepositeVM(SelectedDeposite);
                     dw.ShowDialog();
                     break;
                 case "Loans":
                     if (SelectedLoan is null)
+                    {
+                        MessageBox.Show("No credit selected for editing.");
+
                         return;
+                    }
                     LoanWindow lw = new LoanWindow();
                     lw.DataContext = selectedLoan;
                     lw.ShowDialog();
@@ -212,11 +231,16 @@ namespace BankSystem.ViewModel
             {
                 case "Accounts":
                     if (SelectedAccount is null)
+                    {
+                        MessageBox.Show("The account to close is not selected.");
+
                         return;
+                    }
                     clientProfile.RemoveBankAccount(SelectedAccount);
                     break;
             }
         }
+
         #endregion
 
         #region INPC

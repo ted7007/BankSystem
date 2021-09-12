@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using BankSystem.Model;
 using BankSystem.Model.Client;
@@ -80,25 +81,38 @@ namespace BankSystem.ViewModel
         /// </summary>
         public void Transfer()
         {
-            if (SelectedProfileControlToTransfer is null || SumToTransfer==0)
+            if (SelectedProfileControlToTransfer is null || SumToTransfer == 0)
+            {
+                MessageBox.Show("There is not enough information for translation.");
                 return;
-            switch(SelectedProfileControlToTransfer.Content as string)
+            }
+            switch (SelectedProfileControlToTransfer.Content as string)
             {
                 case "Bank account":
-                    if (BankSystem.Model.BankAccount.Find(IdToTransfer) is null)
+                    if (BankAccount.Find(IdToTransfer) is null)
+                    {
+                        MessageBox.Show("The account for the transfer was not found.");
                         return;
-                    bankAccount.Transfer(BankSystem.Model.BankAccount.Find(IdToTransfer), SumToTransfer);
+                    }
+                    
+                    bankAccount.Transfer(BankAccount.Find(IdToTransfer), SumToTransfer);
                     OnPropertyChanged("BankAccount.CurrentBalance");
                     break;
                 case "Deposite":
-                    if (BankSystem.Model.Deposite.Deposite.Find(IdToTransfer) is null)
+                    if (Model.Deposite.Deposite.Find(IdToTransfer) is null)
+                    {
+                        MessageBox.Show("The account for the transfer was not found.");
                         return;
-                    bankAccount.Transfer(BankSystem.Model.Deposite.Deposite.Find(IdToTransfer), SumToTransfer);
+                    }
+                    bankAccount.Transfer(Model.Deposite.Deposite.Find(IdToTransfer), SumToTransfer);
                     break;
                 case "Loan":
-                    if (BankSystem.Model.Loan.Find(IdToTransfer) is null)
+                    if (Loan.Find(IdToTransfer) is null)
+                    {
+                        MessageBox.Show("The account for the transfer was not found.");
                         return;
-                    bankAccount.Transfer(BankSystem.Model.Loan.Find(IdToTransfer), SumToTransfer);
+                    }
+                    bankAccount.Transfer(Loan.Find(IdToTransfer), SumToTransfer);
                     break;
             }
             BankClientProfile.Find(bankAccount.ProfileId).RemoveUnactiveControls();
@@ -110,8 +124,12 @@ namespace BankSystem.ViewModel
         /// </summary>
         public void Fill()
         {
-            if (SumToFill == 0)
-                return;
+            if (SumToFill <= 0)
+            {
+                MessageBox.Show("The amount to top up cannot be less than / equal to zero");
+
+                return; 
+            }
             bankAccount.Put(BankAccount, SumToFill);
             OnPropertyChanged("BankAccount");
         }
