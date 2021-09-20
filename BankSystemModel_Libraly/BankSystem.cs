@@ -5,11 +5,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using BankSystem.Model.Client;
+using BankSystemModel_Libraly.Client;
 
-namespace BankSystem.Model
+namespace BankSystemModel_Libraly
 {
-    class BankSystem : INotifyPropertyChanged
+    public class BankSystem : INotifyPropertyChanged
     {
         #region static
         
@@ -26,7 +26,7 @@ namespace BankSystem.Model
         /// <summary>
         /// Переход на следующий месяц
         /// </summary>
-        static public void StaticGoNextMonth()
+        static private void StaticGoNextMonth()
         {
             CurrentDate = CurrentDate.AddMonths(1);
         }
@@ -93,7 +93,8 @@ namespace BankSystem.Model
                         "make transfers from one account to another; \n" +
                         "open deposits and loans. \n" +
                         "You can also go to the next month to change the accounts of loans and deposits. \n" +
-                        "\n Update 09.09.2021: Added Notifications in ProfileInfo";
+                        "\n Update 09.09.2021: Added Notifications in ProfileInfo" +
+                        "\n Update 20.09.2021: Fixed some bugs";
         }
 
         #region methods
@@ -190,7 +191,7 @@ namespace BankSystem.Model
         #endregion
     }
     
-    enum DepartamentType
+    public enum DepartamentType
     {
         Regular,
         VIP,

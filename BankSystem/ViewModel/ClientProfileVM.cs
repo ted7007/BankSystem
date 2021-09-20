@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BankSystem.Model;
-using BankSystem.Model.Deposite;
-using BankSystem.Model.Client;
+using BankSystemModel_Libraly.Client;
+using BankSystemModel_Libraly;
+using BankSystemModel_Libraly.Deposite;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using BankSystem.View;
 using System.Windows;
+
 
 namespace BankSystem.ViewModel
 {
@@ -161,11 +162,11 @@ namespace BankSystem.ViewModel
                     {
                         case "Default":
                             dt = DepositeType.Default;
-                            clientProfile.AddDeposite(dt, new DateTime().AddMonths(NewDepositeMonths), BankSystem.Model.BankSystem.CurrentDate, newDepositeStartBalance);
+                            clientProfile.AddDeposite(dt, new DateTime().AddMonths(NewDepositeMonths), BankSystemModel_Libraly.BankSystem.CurrentDate, newDepositeStartBalance);
                             break;
                         case "WithCapitalization":
                             dt = DepositeType.WithCapitalization;
-                            clientProfile.AddDeposite(dt, new DateTime().AddMonths(NewDepositeMonths), BankSystem.Model.BankSystem.CurrentDate, newDepositeStartBalance);
+                            clientProfile.AddDeposite(dt, new DateTime().AddMonths(NewDepositeMonths), BankSystemModel_Libraly.BankSystem.CurrentDate, newDepositeStartBalance);
                             break;
                     }
                     break;
@@ -175,7 +176,7 @@ namespace BankSystem.ViewModel
                         MessageBox.Show("The amount of the loan payment cannot be less than / equal to 0");
                         return;
                     }
-                    clientProfile.AddLoan(NewLoanLoanAmount, BankSystem.Model.BankSystem.CurrentDate);
+                    clientProfile.AddLoan(NewLoanLoanAmount, BankSystemModel_Libraly.BankSystem.CurrentDate);
                     break;
             }
         }

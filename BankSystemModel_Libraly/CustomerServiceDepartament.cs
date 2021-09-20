@@ -1,4 +1,4 @@
-﻿using BankSystem.Model.Client;
+﻿using BankSystemModel_Libraly.Client;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,13 +8,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Model
+namespace BankSystemModel_Libraly
 {
     /// <summary>
     /// Банковский отдел по работе с T клиентами
     /// </summary>
     /// <typeparam name="T">тип клиента, с которым работает банковский отдел</typeparam>
-    class CustomerServiceDepartament<T> : INotifyPropertyChanged, IBankNotifyEvent
+    public class CustomerServiceDepartament<T> : INotifyPropertyChanged, IBankNotifyEvent
     where T : BankClientProfile
     {
         #region fields

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Model.EventArgs
+namespace BankSystemModel_Libraly.EventArgs
 {
     /// <summary>
     /// Класс данных, которые следует передать в событие
     /// </summary>
-    class NotifyEventArgs
+    public class NotifyEventArgs
     {
         /// <summary>
         /// Сообщение, которое необходимо передать

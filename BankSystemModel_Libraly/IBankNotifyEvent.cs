@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BankSystem.Model.EventArgs;
+using BankSystemModel_Libraly.EventArgs;
 
-namespace BankSystem.Model
+namespace BankSystemModel_Libraly
 {
-    interface IBankNotifyEvent
+    public interface IBankNotifyEvent
     {
         /// <summary>
         /// Событие для вызова оповещений

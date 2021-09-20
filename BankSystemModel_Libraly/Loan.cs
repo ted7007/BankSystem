@@ -1,4 +1,5 @@
-﻿using BankSystem.Model.EventArgs;
+﻿using BankSystemModel_Libraly.EventArgs;
+using BankSystemModel_Libraly.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,9 +8,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Model
+namespace BankSystemModel_Libraly
 {
-    class Loan:INotifyPropertyChanged,IProfileControl
+    public class Loan:INotifyPropertyChanged,IProfileControl
     {
         #region static
         static private List<Loan> Loans;
@@ -109,6 +110,8 @@ namespace BankSystem.Model
 
         public Loan(Action<EventArgs.NotifyEventArgs> notifyRelease, decimal startLoanAmount, int loanRate, DateTime startPeriod, int profileId)
         {
+            if (startLoanAmount < 0)
+                throw new InvalidParametrException("Invalid parametr. startLoanAmount can't be less than 0");
             this.loanAmount = startLoanAmount;
             this.rate = loanRate;
             this.profileId = profileId;

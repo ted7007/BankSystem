@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Model.Client
+namespace BankSystemModel_Libraly.Client
 {
     /// <summary>
     /// ВИП клиент как банковский профиль
     /// </summary>
-    class VIPClient:BankClientProfile
+    public class VIPClient:BankClientProfile
     {
         public VIPClient(string name, int depositeRate, int loanRate):base(name, depositeRate, loanRate) { }
 

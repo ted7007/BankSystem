@@ -1,4 +1,5 @@
-﻿using BankSystem.Model.Client;
+﻿using BankSystemModel_Libraly.Client;
+using BankSystemModel_Libraly.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,9 +8,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Model.Deposite
+namespace BankSystemModel_Libraly.Deposite
 {
-    abstract class Deposite:IProfileControl, INotifyPropertyChanged
+    public abstract class Deposite:IProfileControl, INotifyPropertyChanged
     {
         #region static
         static private List<Deposite> Deposites;
@@ -141,8 +142,11 @@ namespace BankSystem.Model.Deposite
         public bool IsAccrualsContinue { get { return isAccrualsContinue; } set { isAccrualsContinue = value; OnPropertyChanged("IsAccrualsContinue"); } }
 
         #endregion
+
         public Deposite(Action<EventArgs.NotifyEventArgs> notifyRelease, int rate, int profileId, decimal startBalance, DateTime startPeriod, DateTime finishPeriod)
         {
+            if (rate < 0 || startBalance < 0 || startPeriod > finishPeriod)
+                throw new InvalidParametrException("Invalid parametr. rate, startBalance can't be less than 0; startPeriod can't be more than finishPeriod");
             this.rate = rate;
             this.finishPeriod = finishPeriod;
             this.startPeriod = startPeriod;

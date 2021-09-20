@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Model
+namespace BankSystemModel_Libraly
 {
     /// <summary>
     /// Интерфейс объекта профиля
     /// </summary>
-    interface IProfileControl:IBankNotifyEvent
+    public interface IProfileControl:IBankNotifyEvent
     {
         /// <summary>
         /// ID объекта

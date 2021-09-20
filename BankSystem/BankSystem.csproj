@@ -55,22 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\BankAccount.cs" />
-    <Compile Include="Model\BankSystem.cs" />
-    <Compile Include="Model\Client\BankClientProfile.cs" />
-    <Compile Include="Model\Client\EntityClient.cs" />
-    <Compile Include="Model\Client\RegularUser.cs" />
-    <Compile Include="Model\Client\VIPClient.cs" />
-    <Compile Include="Model\CustomerServiceDepartament.cs" />
-    <Compile Include="Model\Deposite\DefaultDeposite.cs" />
-    <Compile Include="Model\Deposite\Deposite.cs" />
-    <Compile Include="Model\Deposite\DepositeWithCapitalization.cs" />
-    <Compile Include="Model\EventArgs\AccountEventArgs.cs" />
-    <Compile Include="Model\EventArgs\NotifyEventArgs.cs" />
-    <Compile Include="Model\IBankNotifyEvent.cs" />
-    <Compile Include="Model\IProfileControl.cs" />
-    <Compile Include="Model\Loan.cs" />
-    <Compile Include="Model\NotificationLogs.cs" />
     <Compile Include="ViewModel\BankAccountVM.cs" />
     <Compile Include="ViewModel\BankSystemVM.cs" />
     <Compile Include="ViewModel\ButtonCommand.cs" />
@@ -142,6 +126,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BankSystemModel_Libraly\BankSystemModel_Libraly.csproj">
+      <Project>{282439d8-4dac-47f3-8340-23660bd2fb6e}</Project>
+      <Name>BankSystemModel_Libraly</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

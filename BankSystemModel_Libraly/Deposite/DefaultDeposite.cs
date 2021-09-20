@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Model.Deposite
+namespace BankSystemModel_Libraly.Deposite
 {
     /// <summary>
     /// Обычный депозит
     /// </summary>
-    class DefaultDeposite : Deposite
+    public class DefaultDeposite : Deposite
     {
         public DefaultDeposite(Action<EventArgs.NotifyEventArgs> notifyRelease, int rate, int profileId, decimal startBalance, DateTime startPeriod, DateTime finishPeriod)
             :base(notifyRelease, rate, profileId, startBalance, startPeriod, finishPeriod) { }

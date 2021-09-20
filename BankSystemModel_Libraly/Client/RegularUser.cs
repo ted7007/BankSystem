@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Model.Client
+namespace BankSystemModel_Libraly.Client
 {
     /// <summary>
     /// Обычный пользователь как банковский профиль
     /// </summary>
-    class RegularUser:BankClientProfile
+    public class RegularUser:BankClientProfile
     {
         public RegularUser(string name, int depositeRate, int loanRate):base(name, depositeRate, loanRate) { }
 

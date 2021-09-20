@@ -6,11 +6,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using BankSystem.Model.Deposite;
+using BankSystemModel_Libraly.Deposite;
 
-namespace BankSystem.Model.Client
+namespace BankSystemModel_Libraly.Client
 {
-    abstract class BankClientProfile : INotifyPropertyChanged
+    public abstract class BankClientProfile : INotifyPropertyChanged
     {
         #region static
         static private List<BankClientProfile> BClientProfiles;
@@ -148,9 +148,16 @@ namespace BankSystem.Model.Client
         /// <param name="currentBalance">баланс банковского счёта</param>
         public void AddBankAccount(int currentBalance = 0)
         {
-            BankAccount newBA = new BankAccount(Logs.AddLog, id, currentBalance);
-            BankAccounts.Add(newBA);
-            OnPropertyChanged("BankAccounts");
+            try
+            {
+                BankAccount newBA = new BankAccount(Logs.AddLog, id, currentBalance);
+                BankAccounts.Add(newBA);
+                OnPropertyChanged("BankAccounts");
+            }
+            catch(Exception ex)
+            {
+                Logs.AddLog(new EventArgs.NotifyEventArgs(this, ex.Message));
+            }
         }
 
         /// <summary>
@@ -160,9 +167,17 @@ namespace BankSystem.Model.Client
         /// <param name="startPeriod">Дата взятия кредита</param>
         public void AddLoan(decimal startLoanAmount, DateTime startPeriod)
         {
-            Loan newL = new Loan(Logs.AddLog, startLoanAmount, LoanRate, startPeriod, Id);
-            Loans.Add(newL);
-            OnPropertyChanged("Loans");
+            try
+            {
+                Loan newL = new Loan(Logs.AddLog, startLoanAmount, LoanRate, startPeriod, Id);
+                Loans.Add(newL);
+                OnPropertyChanged("Loans");
+            }
+            catch(Exception ex)
+            {
+                Logs.AddLog(new EventArgs.NotifyEventArgs(this, ex.Message));
+
+            }
         }
 
         /// <summary>
@@ -174,16 +189,24 @@ namespace BankSystem.Model.Client
         /// <param name="startBalance">Начальная сумма</param>
         public void AddDeposite(DepositeType type, DateTime startPeriod, DateTime finishPeriod, decimal startBalance)
         {
-            switch(type)
+            try
             {
-                case DepositeType.Default:
-                    Deposites.Add(new DefaultDeposite(Logs.AddLog, DepositeRate, Id,startBalance, startPeriod, finishPeriod));
-                    break;
-                case DepositeType.WithCapitalization:
-                    Deposites.Add(new DepositeWithCapitalization(Logs.AddLog, DepositeRate, Id, startBalance, startPeriod, finishPeriod));
-                    break;
+                switch (type)
+                {
+                    case DepositeType.Default:
+                        Deposites.Add(new DefaultDeposite(Logs.AddLog, DepositeRate, Id, startBalance, startPeriod, finishPeriod));
+                        break;
+                    case DepositeType.WithCapitalization:
+                        Deposites.Add(new DepositeWithCapitalization(Logs.AddLog, DepositeRate, Id, startBalance, startPeriod, finishPeriod));
+                        break;
+                }
+                OnPropertyChanged("Deposites");
             }
-            OnPropertyChanged("Deposites");
+            catch(Exception ex)
+            {
+                Logs.AddLog(new EventArgs.NotifyEventArgs(this, ex.Message));
+
+            }
         }
 
         /// <summary>
@@ -271,7 +294,7 @@ namespace BankSystem.Model.Client
     /// <summary>
     /// перечисление типов депозита
     /// </summary>
-    enum DepositeType
+    public enum DepositeType
     {
         Default,
         WithCapitalization

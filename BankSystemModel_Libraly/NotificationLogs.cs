@@ -1,4 +1,4 @@
-﻿using BankSystem.Model.EventArgs;
+﻿using BankSystemModel_Libraly.EventArgs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,9 +8,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Model
+namespace BankSystemModel_Libraly
 {
-    class NotificationLogs:INotifyPropertyChanged
+    public class NotificationLogs:INotifyPropertyChanged
     {
         #region fields
 
@@ -32,6 +32,10 @@ namespace BankSystem.Model
             logs = new ObservableCollection<string>();
         }
 
+        /// <summary>
+        /// Метод добавления записи в журнал
+        /// </summary>
+        /// <param name="e"> данные для добавления записи</param>
         public void AddLog(NotifyEventArgs e)
         {
             if (e is null)

@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using BankSystem.Model;
-using BankSystem.Model.Client;
+using BankSystemModel_Libraly;
+using BankSystemModel_Libraly.Client;
+using BankSystemModel_Libraly.Deposite;
 
 namespace BankSystem.ViewModel
 {
@@ -99,12 +100,12 @@ namespace BankSystem.ViewModel
                     OnPropertyChanged("BankAccount.CurrentBalance");
                     break;
                 case "Deposite":
-                    if (Model.Deposite.Deposite.Find(IdToTransfer) is null)
+                    if (Deposite.Find(IdToTransfer) is null)
                     {
                         MessageBox.Show("The account for the transfer was not found.");
                         return;
-                    }
-                    bankAccount.Transfer(Model.Deposite.Deposite.Find(IdToTransfer), SumToTransfer);
+                    } 
+                    bankAccount.Transfer(Deposite.Find(IdToTransfer), SumToTransfer);
                     break;
                 case "Loan":
                     if (Loan.Find(IdToTransfer) is null)

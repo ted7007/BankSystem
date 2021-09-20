@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Model.EventArgs
+namespace BankSystemModel_Libraly.EventArgs
 {
     /// <summary>
     /// класс, который содержит данные о транзакции
     /// </summary>
-    class AccountEventArgs:NotifyEventArgs
+    public class AccountEventArgs:NotifyEventArgs
     {
         /// <summary>
         /// Сумма транзакции
@@ -33,7 +33,7 @@ namespace BankSystem.Model.EventArgs
     /// <summary>
     /// Тип транзакции
     /// </summary>
-    enum AccountNotifyType
+    public enum AccountNotifyType
     {
         /// <summary>
         /// Транзакция перевода

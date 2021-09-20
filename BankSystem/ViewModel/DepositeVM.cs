@@ -1,5 +1,5 @@
-﻿using BankSystem.Model.Client;
-using BankSystem.Model.Deposite;
+﻿using BankSystemModel_Libraly.Client;
+using BankSystemModel_Libraly.Deposite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +8,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using BankSystemModel_Libraly;
+using System.Windows;
 
 namespace BankSystem.ViewModel
 {
@@ -82,24 +84,27 @@ namespace BankSystem.ViewModel
         public void Transfer()
         {
             if (SelectedProfileControlToTransfer is null || SumToTransfer == 0)
+            {
+                MessageBox.Show("There is not enough information for translation.");
                 return;
+            }
             switch (SelectedProfileControlToTransfer.Content as string)
             {
                 case "Bank account":
-                    if (BankSystem.Model.BankAccount.Find(IdToTransfer) is null)
+                    if (BankAccount.Find(IdToTransfer) is null)
                         return;
-                    deposite.Transfer(BankSystem.Model.BankAccount.Find(IdToTransfer), SumToTransfer);
+                    deposite.Transfer(BankAccount.Find(IdToTransfer), SumToTransfer);
                     OnPropertyChanged("BankAccount.CurrentBalance");
                     break;
                 case "Deposite":
-                    if (BankSystem.Model.Deposite.Deposite.Find(IdToTransfer) is null)
+                    if (Deposite.Find(IdToTransfer) is null)
                         return;
-                    deposite.Transfer(BankSystem.Model.Deposite.Deposite.Find(IdToTransfer), SumToTransfer);
+                    deposite.Transfer(Deposite.Find(IdToTransfer), SumToTransfer);
                     break;
                 case "Loan":
-                    if (BankSystem.Model.Loan.Find(IdToTransfer) is null)
+                    if (Loan.Find(IdToTransfer) is null)
                         return;
-                    deposite.Transfer(BankSystem.Model.Loan.Find(IdToTransfer), SumToTransfer);
+                    deposite.Transfer(Loan.Find(IdToTransfer), SumToTransfer);
                     break;
             }
             BankClientProfile.Find(deposite.ProfileId).RemoveUnactiveControls();
