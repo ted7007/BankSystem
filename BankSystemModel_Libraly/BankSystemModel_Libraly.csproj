@@ -54,6 +54,8 @@
     <Compile Include="EventArgs\AccountEventArgs.cs" />
     <Compile Include="EventArgs\NotifyEventArgs.cs" />
     <Compile Include="Exceptions\InvalidParametrException.cs" />
+    <Compile Include="Extensions\DecimalExtensions.cs" />
+    <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="IBankNotifyEvent.cs" />
     <Compile Include="IProfileControl.cs" />
     <Compile Include="Loan.cs" />

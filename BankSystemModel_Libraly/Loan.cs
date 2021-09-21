@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using BankSystemModel_Libraly.Extensions;
 
 namespace BankSystemModel_Libraly
 {
@@ -138,12 +139,12 @@ namespace BankSystemModel_Libraly
             CurrentPeriod = CurrentPeriod.AddMonths(1);
 
             CheckActive();
-            if ((CurrentPeriod - StartPeriod).TotalDays / 365 >= 1)
+            if ((CurrentPeriod - StartPeriod).GetYears() >= 1)
             {
                 StartPeriod = CurrentPeriod;
-                decimal diff = LoanAmount * ((decimal)rate / 100);
+                decimal diff = LoanAmount.GetAccrualOfInterest(Rate) - LoanAmount;
                 BankNotifyEvent?.Invoke(new AccountEventArgs(this, "Transaction succesful finished", diff, AccountNotifyType.AccrualOfInterest));
-                this.LoanAmount += diff;
+                this.LoanAmount = LoanAmount.GetAccrualOfInterest(Rate);
             }
 
             

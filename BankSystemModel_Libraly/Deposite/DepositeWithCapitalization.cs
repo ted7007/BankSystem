@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankSystemModel_Libraly.Extensions;
 
 namespace BankSystemModel_Libraly.Deposite
 {
@@ -22,9 +23,9 @@ namespace BankSystemModel_Libraly.Deposite
                                                                                         //
             CurrentPeriod = CurrentPeriod.AddMonths(1);                                 //
             CheckActive();
-            decimal diff = CurrentBalance * ((decimal)Rate / 100);
+            decimal diff = CurrentBalance.GetAccrualOfInterest(Rate) - CurrentBalance;
             CallNotify(new EventArgs.AccountEventArgs(this, "Transaction succesful finished", diff, EventArgs.AccountNotifyType.AccrualOfInterest));
-            CurrentBalance += diff;                                                    //
+            CurrentBalance = CurrentBalance.GetAccrualOfInterest(Rate);                                                    //
         }                                                                               
 
     }
