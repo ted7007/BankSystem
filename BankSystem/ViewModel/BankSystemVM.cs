@@ -8,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using BankSystemModel_Libraly;
-using BankSystemModel_Libraly.Client;
+using BankSystemModel_Libraly.BankSystemComponents;
 using BankSystem.View;
+using BankClientProfileModel_Libraly.PorfileObjects;
 
 namespace BankSystem.ViewModel
 {
     class BankSystemVM : INotifyPropertyChanged
     {
         #region fields
-        private BankSystemModel_Libraly.BankSystem bankSystem;
+        private BankSystemModel_Libraly.BankSystemComponents.BankSystem bankSystem;
 
         private ButtonCommand addCommand;
 
@@ -107,7 +107,7 @@ namespace BankSystem.ViewModel
 
         public BankSystemVM()
         {
-            this.bankSystem = BankSystemModel_Libraly.BankSystem.GenerateSystem(12, 24, 5);
+            this.bankSystem = BankSystemModel_Libraly.BankSystemComponents.BankSystem.GenerateSystem(12, 24, 5);
         }
 
         #region methods

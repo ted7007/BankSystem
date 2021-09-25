@@ -128,6 +128,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BankClientProfileModel_Libraly\BankClientProfileModel_Libraly.csproj">
+      <Project>{6daa06fc-6e9b-45ef-ba7c-b90f5db5534c}</Project>
+      <Name>BankClientProfileModel_Libraly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BankComponentsModel_Libraly\BankComponentsModel_Libraly.csproj">
+      <Project>{5f237417-2b87-4164-aaca-1cc9c254c1ed}</Project>
+      <Name>BankComponentsModel_Libraly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BankProfileControlsModel_Libraly\BankProfileControlsModel_Libraly.csproj">
+      <Project>{38897176-c329-4ff0-b39c-ed2d010a7f03}</Project>
+      <Name>BankProfileControlsModel_Libraly</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BankSystemModel_Libraly\BankSystemModel_Libraly.csproj">
       <Project>{282439d8-4dac-47f3-8340-23660bd2fb6e}</Project>
       <Name>BankSystemModel_Libraly</Name>

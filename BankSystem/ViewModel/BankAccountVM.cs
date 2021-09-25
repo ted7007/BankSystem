@@ -1,4 +1,8 @@
-﻿using System;
+﻿using BankClientProfileModel_Libraly.PorfileObjects;
+using BankProfileControlsModel_Libraly.BankAccountObjects;
+using BankProfileControlsModel_Libraly.DepositeObjects;
+using BankProfileControlsModel_Libraly.LoanObjects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,9 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using BankSystemModel_Libraly;
-using BankSystemModel_Libraly.Client;
-using BankSystemModel_Libraly.Deposite;
 
 namespace BankSystem.ViewModel
 {

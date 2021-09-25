@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BankSystemModel_Libraly.Client;
 using BankSystemModel_Libraly;
-using BankSystemModel_Libraly.Deposite;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using BankSystem.View;
 using System.Windows;
-
+using BankClientProfileModel_Libraly.PorfileObjects;
+using BankProfileControlsModel_Libraly.BankAccountObjects;
+using BankProfileControlsModel_Libraly.LoanObjects;
+using BankProfileControlsModel_Libraly.DepositeObjects;
 
 namespace BankSystem.ViewModel
 {
@@ -162,11 +163,11 @@ namespace BankSystem.ViewModel
                     {
                         case "Default":
                             dt = DepositeType.Default;
-                            clientProfile.AddDeposite(dt, new DateTime().AddMonths(NewDepositeMonths), BankSystemModel_Libraly.BankSystem.CurrentDate, newDepositeStartBalance);
+                            clientProfile.AddDeposite(dt, new DateTime().AddMonths(NewDepositeMonths), BankSystemModel_Libraly.BankSystemComponents.BankSystem.CurrentDate, newDepositeStartBalance);
                             break;
                         case "WithCapitalization":
                             dt = DepositeType.WithCapitalization;
-                            clientProfile.AddDeposite(dt, new DateTime().AddMonths(NewDepositeMonths), BankSystemModel_Libraly.BankSystem.CurrentDate, newDepositeStartBalance);
+                            clientProfile.AddDeposite(dt, new DateTime().AddMonths(NewDepositeMonths), BankSystemModel_Libraly.BankSystemComponents.BankSystem.CurrentDate, newDepositeStartBalance);
                             break;
                     }
                     break;
@@ -176,7 +177,7 @@ namespace BankSystem.ViewModel
                         MessageBox.Show("The amount of the loan payment cannot be less than / equal to 0");
                         return;
                     }
-                    clientProfile.AddLoan(NewLoanLoanAmount, BankSystemModel_Libraly.BankSystem.CurrentDate);
+                    clientProfile.AddLoan(NewLoanLoanAmount, BankSystemModel_Libraly.BankSystemComponents.BankSystem.CurrentDate);
                     break;
             }
         }
